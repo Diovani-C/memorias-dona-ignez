@@ -5,6 +5,7 @@ from typing import List, Optional, Tuple
 
 import spandrel_extra_arches
 import torch
+from deepface import DeepFace
 from PIL import Image
 from spandrel import ImageModelDescriptor, ModelLoader
 from torchvision.transforms import v2 as tv2
@@ -77,17 +78,119 @@ def validate_paths(in_path: Path, out_path: Path) -> Tuple[bool, Optional[str]]:
 
 def get_image_paths(input_dir: Path, recursive: bool) -> List[Path]:
     """Get list of image paths from input directory."""
-    if recursive:
-        return [
-            p
-            for p in input_dir.rglob("*")
-            if p.suffix.lower() in SUPPORTED_EXTENSIONS and p.is_file()
-        ]
+    glob_fn = input_dir.rglob if recursive else input_dir.glob
     return [
         p
-        for p in input_dir.glob("*")
+        for p in glob_fn("*")
         if p.suffix.lower() in SUPPORTED_EXTENSIONS and p.is_file()
     ]
+
+
+def get_transform(task: str) -> tv2.Compose:
+    """Return the appropriate transform pipeline based on the task."""
+    # For colorization, convert to grayscale; otherwise use RGB.
+    if task == "color":
+
+        def pre_convert(img):
+            return img.convert("L")
+
+        # Note: tv2.ToImage() expects a PIL image.
+        return tv2.Compose(
+            [
+                tv2.Lambda(pre_convert),
+                tv2.ToImage(),
+                tv2.ToDtype(torch.float32, scale=True),
+            ]
+        )
+    else:
+
+        def pre_convert(img):
+            return img.convert("RGB")
+
+        return tv2.Compose(
+            [
+                tv2.Lambda(pre_convert),
+                tv2.ToImage(),
+                tv2.ToDtype(torch.uint8, scale=True),
+                tv2.ToDtype(torch.float32, scale=True),
+            ]
+        )
+
+
+def process_and_return(
+    img: Image.Image,
+    model: ImageModelDescriptor,
+    device: torch.device,
+    transform: tv2.Compose,
+) -> Image.Image:
+    """Common processing: open image, apply transform, run through model, and return output."""
+    with torch.inference_mode():
+        image_tensor = transform(img).unsqueeze(0).to(device)
+        output_tensor = model(image_tensor)
+        output_tensor = output_tensor.squeeze(0).clamp(0, 1)
+        # Post-process: convert tensor to uint8 then to PIL image.
+        output_uint8 = tv2.ToDtype(torch.uint8, scale=True)(output_tensor)
+        return tv2.ToPILImage()(output_uint8.cpu())
+
+
+def process_face_image(
+    image_input_path: Path,
+    model: ImageModelDescriptor,
+    device: torch.device,
+) -> Image.Image | None:
+    """Process faces in an image and merge enhanced faces back to original."""
+    try:
+        original_img = Image.open(image_input_path).convert("RGB")
+        modified_img = original_img.copy()
+
+        # Extract aligned faces using DeepFace
+        faces = DeepFace.extract_faces(
+            str(image_input_path),
+            detector_backend="retinaface",
+            align=True,
+            grayscale=False,
+        )
+
+        # Re-use the general transform for face images.
+        transform = get_transform(task="face")
+        for face in faces:
+            # Get face coordinates from original image.
+            facial_area = face["facial_area"]
+            x, y, w, h = (
+                facial_area["x"],
+                facial_area["y"],
+                facial_area["w"],
+                facial_area["h"],
+            )
+
+            # Process the aligned face.
+            face_np = face["face"]  # numpy array (height, width, 3)
+
+            # Convert to uint8 if necessary
+            if face_np.dtype != "uint8":
+                # If values are between 0 and 1, scale them to 0-255; otherwise, just cast.
+                if face_np.max() <= 1.0:
+                    face_np = (face_np * 255).astype("uint8")
+                else:
+                    face_np = face_np.astype("uint8")
+
+            face_img = Image.fromarray(face_np)
+            face_img = face_img.resize(
+                (512, 512), Image.Resampling.LANCZOS
+            )  # Resize to 512x512
+
+            enhanced_face = process_and_return(face_img, model, device, transform)
+            # Resize enhanced face to original face dimensions.
+            enhanced_face = enhanced_face.resize((w, h), Image.Resampling.LANCZOS)
+            modified_img.paste(enhanced_face, (x, y))
+
+        return modified_img
+
+    except ValueError as e:
+        logger.warning(f"No faces detected in {image_input_path}: {str(e)}")
+    except Exception as e:
+        logger.error(f"Error processing faces in {image_input_path}: {str(e)}")
+        raise
 
 
 def process_image(
@@ -97,42 +200,20 @@ def process_image(
     device: torch.device,
     task: str,
 ) -> None:
-    """Process a single image through the model and save the output."""
+    """Process a single image based on the task and save the output."""
     try:
-        with torch.inference_mode(), Image.open(image_input_path) as img:
-            # Convert to grayscale for colorization task
-            if task == "color":
-                # DDColor expects single channel input
-                image = img.convert("L")
-            else:
-                image = img.convert("RGB")
+        if task == "face":
+            output_image = process_face_image(image_input_path, model, device)
+        else:
+            transform = get_transform(task)
+            img = Image.open(image_input_path)
+            output_image = process_and_return(img, model, device, transform)
 
-            # Create transform pipeline
-            transform = tv2.Compose(
-                [
-                    tv2.ToImage(),
-                    tv2.ToDtype(torch.uint8, scale=True),
-                    tv2.ToDtype(torch.float32, scale=True),
-                ]
-            )
+        if not output_image:
+            raise
 
-            # Process image tensor
-            image_tensor = transform(image)
-
-            # Add batch dimension and ensure correct shape
-            image_tensor = image_tensor.unsqueeze(0).to(device)
-
-            # Model inference
-            output_tensor = model(image_tensor)
-
-            # Post-process output
-            output_tensor = output_tensor.squeeze(0).clamp(0, 1)
-            output_uint8 = tv2.ToDtype(torch.uint8, scale=True)(output_tensor)
-            output_image = tv2.ToPILImage()(output_uint8.cpu())
-
-            # Ensure output directory exists
-            image_output_path.parent.mkdir(parents=True, exist_ok=True)
-            output_image.save(image_output_path)
+        output_image.save(image_output_path)
+        logger.info(f"Saved processed image to: {image_output_path}")
 
     except Exception as e:
         logger.error(f"Failed to process {image_input_path}: {str(e)}")

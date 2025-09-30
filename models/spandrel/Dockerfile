@@ -1,13 +1,13 @@
 FROM pytorch/pytorch:2.6.0-cuda12.6-cudnn9-runtime
 
 # Install system dependencies
-RUN apt-get update && apt-get install -y wget \
+RUN apt-get update && apt-get install -y wget python3-opencv \
   && rm -rf /var/lib/apt/lists/*
 
 WORKDIR /app
 
 RUN pip install --upgrade pip && \
-  pip install spandrel spandrel_extra_arches pillow tqdm gdown
+  pip install spandrel spandrel_extra_arches pillow deepface tqdm gdown tf-keras
 
 # Download the pretrained models
 RUN mkdir weights
