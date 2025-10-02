@@ -1,90 +1,108 @@
-import { GoogleGenAI } from "@google/genai";
-import mime from "mime";
-import { writeFile, readFileSync, readdir } from "fs";
-import { join } from "path";
+// src/cli.ts
 
-const INPUT_FOLDER_PATH = join(__dirname, "input");
-const OUTPUT_FOLDER_PATH = join(__dirname, "output");
+import yargs from "yargs";
+import { hideBin } from "yargs/helpers";
+import { existsSync, lstatSync } from "fs";
+import { resolve } from "path";
 
-function saveBinaryFile(fileName: string, content: Buffer) {
-  writeFile(fileName, content, "utf8", (err) => {
-    if (err) {
-      console.error(`Error writing file ${fileName}:`, err);
-      return;
-    }
-    console.log(`File ${fileName} saved to file system.`);
-  });
-}
-
-function readImageFile(imgPath: string) {
-  let mimeType: string;
-  if (imgPath.includes(".jpeg") || imgPath.includes(".jpg"))
-    mimeType = "image/jpeg";
-  else mimeType = "image/png";
-
-  const imagePath = imgPath;
-  const imageData = readFileSync(imagePath);
-  return {
-    data: imageData.toString("base64"),
-    mimeType,
-  };
-}
+// Import the task creators
+import { createRestoreImageTask } from "./src/tasks/RestoreTask.ts";
+import { createGenerateAltTextTask } from "./src/tasks/ImageUnderstandingTask.ts";
+import type { TaskFunction } from "./src/types.js";
 
 async function main() {
-  const apiKey = process.env.GEMINI_API_KEY;
-  if (apiKey == undefined) throw "API key not found";
+  const argv = await yargs(hideBin(process.argv))
+    .usage("Usage: $0 -t <task> -i <input> -o <output>")
+    .option("task", {
+      alias: "t",
+      describe: "The image processing task to perform",
+      choices: [
+        "restoration",
+        "description",
+        "upscale",
+        "img2video",
+        "compression",
+      ] as const,
+      demandOption: true,
+    })
+    .option("input", {
+      alias: "i",
+      describe: "Input file or folder path",
+      type: "string",
+      demandOption: true,
+    })
+    .option("output", {
+      alias: "o",
+      describe: "Output folder path",
+      type: "string",
+      demandOption: true,
+    })
+    .check((argv) => {
+      // Custom validation for file paths
+      const inputPath = resolve(argv.input);
+      const outputPath = resolve(argv.output);
 
-  const ai = new GoogleGenAI({
-    apiKey,
-  });
-  const config = {
-    responseModalities: ["IMAGE", "TEXT"],
+      if (!existsSync(inputPath)) {
+        throw new Error(`Input path does not exist: ${inputPath}`);
+      }
+      if (!existsSync(outputPath)) {
+        throw new Error(`Output path does not exist: ${outputPath}`);
+      }
+      if (!lstatSync(outputPath).isDirectory()) {
+        throw new Error(`Output path must be a directory: ${outputPath}`);
+      }
+      return true;
+    })
+    .example(
+      "$0 -t restoration -i ./old-photos -o ./restored-photos",
+      "Restore all images in a folder.",
+    )
+    .example(
+      "$0 -t description -i ./my-image.jpg -o ./output",
+      "Generate alt text for a single image.",
+    )
+    .help("h")
+    .alias("h", "help")
+    .parseAsync();
+
+  // --- Task Execution ---
+  const { task, input, output } = argv;
+
+  // A registry to map task names to their factory functions
+  const taskRegistry: Record<string, () => TaskFunction> = {
+    restoration: createRestoreImageTask,
+    description: createGenerateAltTextTask,
   };
-  const model = "gemini-2.5-flash-image-preview";
-  const contents = [
-    {
-      role: "user",
-      parts: [
-        {
-          inlineData: {
-            data: ``,
-            mimeType: `image/jpeg`,
-          },
-        },
-        {
-          text: `Restore this old photograph. Please remove scratches, dust, and fix the faded colors. Improve the overall clarity and sharpness.`,
-        },
-      ],
-    },
-  ];
 
-  const response = await ai.models.generateContentStream({
-    model,
-    config,
-    contents,
-  });
+  console.log(`🚀 Starting task: '${task}'...`);
+  console.log(`   - Input: ${resolve(input)}`);
+  console.log(`   - Output: ${resolve(output)}`);
 
-  let fileIndex = 0;
-
-  for await (const chunk of response) {
-    if (
-      !chunk.candidates ||
-      !chunk.candidates[0].content ||
-      !chunk.candidates[0].content.parts
-    ) {
-      continue;
-    }
-
-    if (chunk.candidates?.[0]?.content?.parts?.[0]?.inlineData) {
-      const fileName = `ENTER_FILE_NAME_${fileIndex++}`;
-      const inlineData = chunk.candidates[0].content.parts[0].inlineData;
-      const fileExtension = mime.getExtension(inlineData.mimeType || "");
-      const buffer = Buffer.from(inlineData.data || "", "base64");
-      saveBinaryFile(`${fileName}.${fileExtension}`, buffer);
+  try {
+    const createTask = taskRegistry[task];
+    if (createTask) {
+      const taskRunner = createTask();
+      await taskRunner({
+        inputPath: input,
+        outputPath: output,
+      });
+      console.log(`✅ Task '${task}' completed successfully!`);
     } else {
-      console.log(chunk.text);
+      // Handle tasks that are defined in options but not yet implemented
+      console.warn(
+        `🚧 The '${task}' task is not yet implemented. Coming soon!`,
+      );
     }
+  } catch (error) {
+    console.error("\n❌ An error occurred during task execution:");
+    if (error instanceof Error) {
+      console.error(error.message);
+    } else {
+      console.error(error);
+    }
+    process.exit(1); // Exit with an error code
   }
 }
 
+// Run the main function
 main();
