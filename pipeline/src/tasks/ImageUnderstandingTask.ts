@@ -9,13 +9,13 @@ import type { TaskFunction, FileDataType } from "../types.ts";
 import { createUserContent, createPartFromUri } from "@google/genai";
 import { join, parse } from "path";
 import { writeFile } from "fs/promises";
-import { getInputFiles } from "../fileHandler.ts";
 import { Buffer } from "buffer";
 import {
   getGoogleAI,
   writeBatchRequestsToFile,
   saveBatchJobInfo,
   monitoringBatchJobStatus,
+  getInputFiles,
   type RequestType,
 } from "./utils.ts";
 
