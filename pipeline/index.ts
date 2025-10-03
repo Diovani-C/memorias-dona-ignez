@@ -8,6 +8,7 @@ import { resolve } from "path";
 // Import the task creators
 import { createRestoreImageTask } from "./src/tasks/RestoreTask.ts";
 import { createGenerateAltTextTask } from "./src/tasks/ImageUnderstandingTask.ts";
+import { createOptimizeImageTask } from "./src/tasks/OptimizeTask.ts";
 import type { TaskFunction } from "./src/types.js";
 
 async function main() {
@@ -72,6 +73,7 @@ async function main() {
   const taskRegistry: Record<string, () => TaskFunction> = {
     restoration: createRestoreImageTask,
     description: createGenerateAltTextTask,
+    compression: createOptimizeImageTask,
   };
 
   console.log(`🚀 Starting task: '${task}'...`);
