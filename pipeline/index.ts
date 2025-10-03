@@ -9,6 +9,7 @@ import { resolve } from "path";
 import { createRestoreImageTask } from "./src/tasks/RestoreTask.ts";
 import { createGenerateAltTextTask } from "./src/tasks/ImageUnderstandingTask.ts";
 import { createOptimizeImageTask } from "./src/tasks/OptimizeTask.ts";
+import { createUpscaleImageTask } from "./src/tasks/UpscaleTask.ts";
 import type { TaskFunction } from "./src/types.js";
 
 async function main() {
@@ -74,6 +75,7 @@ async function main() {
     restoration: createRestoreImageTask,
     description: createGenerateAltTextTask,
     compression: createOptimizeImageTask,
+    upscale: createUpscaleImageTask,
   };
 
   console.log(`🚀 Starting task: '${task}'...`);
