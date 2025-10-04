@@ -10,6 +10,7 @@ import { createRestoreImageTask } from "./src/tasks/RestoreTask.ts";
 import { createGenerateAltTextTask } from "./src/tasks/ImageUnderstandingTask.ts";
 import { createOptimizeImageTask } from "./src/tasks/OptimizeTask.ts";
 import { createUpscaleImageTask } from "./src/tasks/UpscaleTask.ts";
+import { createConvertToBwTask } from "./src/tasks/ConvertToBwTask.ts";
 import type { TaskFunction } from "./src/types.js";
 
 async function main() {
@@ -24,6 +25,7 @@ async function main() {
         "upscale",
         "img2video",
         "compression",
+        "bw",
       ] as const,
       demandOption: true,
     })
@@ -76,6 +78,7 @@ async function main() {
     description: createGenerateAltTextTask,
     compression: createOptimizeImageTask,
     upscale: createUpscaleImageTask,
+    bw: createConvertToBwTask,
   };
 
   console.log(`🚀 Starting task: '${task}'...`);
