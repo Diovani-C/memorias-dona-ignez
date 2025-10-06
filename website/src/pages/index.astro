@@ -1,4 +1,10 @@
 ---
+import { getCollection } from 'astro:content';
+
+// Get all entries from a collection.
+// Requires the name of the collection as an argument.
+const allImages = await getCollection("images");
+console.log(allImages)
 
 ---
 
@@ -12,5 +18,8 @@
 	</head>
 	<body>
 		<h1>Astro</h1>
+    <ul>{
+allImages.map((image) => <li>{image.data.src}</li>)
+      }</ul>
 	</body>
 </html>

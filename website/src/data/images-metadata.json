@@ -1,0 +1,9 @@
+[
+  {
+    "slug": "image_01",
+    "src": "image02.jpg",
+    "alt": "this is a image",
+    "raw": "raw.jpg",
+    "categories": ["Fragmentos"]
+  }
+]

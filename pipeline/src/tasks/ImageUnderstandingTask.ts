@@ -66,7 +66,7 @@ async function generateAltText(
     ]),
   });
 
-  const altText = response.text();
+  const altText = response.text;
   if (!altText) {
     throw new Error(`API failed to generate text for ${file.name}.`);
   }
