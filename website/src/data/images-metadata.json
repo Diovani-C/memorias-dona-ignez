@@ -1,9 +1,9 @@
 [
   {
-    "slug": "image_01",
-    "src": "image02.jpg",
+    "slug": "img01",
+    "src": "./img01.png",
     "alt": "this is a image",
-    "raw": "raw.jpg",
+    "raw": "./raw/img01.png",
     "categories": ["Fragmentos"]
   }
 ]
