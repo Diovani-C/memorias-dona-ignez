@@ -12,4 +12,30 @@ const allImages = await getCollection("images");
     <ul>{
 allImages.map((image) => <Image src={image.data.src} alt={image.data.alt}/>)
       }</ul>
+
+        <!-- Seção da Galeria -->
+        <section id="gallery" class="page-section hidden fade-in">
+            <h2 class="text-4xl font-title text-center mb-8">Galeria de Memórias</h2>
+            
+            <!-- Filtros -->
+            <div class="mb-10">
+                <div class="mb-6">
+                    <h3 class="font-bold text-lg mb-3 text-center">Filtrar por Álbum:</h3>
+                    <div id="album-filters" class="flex flex-wrap justify-center gap-2">
+                        <!-- Botões de filtro de álbum serão inseridos aqui -->
+                    </div>
+                </div>
+                <div>
+                    <h3 class="font-bold text-lg mb-3 text-center">Filtrar por Pessoa:</h3>
+                    <div id="people-filters" class="flex flex-wrap justify-center gap-2">
+                        <!-- Botões de filtro de pessoa serão inseridos aqui -->
+                    </div>
+                </div>
+            </div>
+
+            <!-- Grade de Fotos -->
+            <div id="photo-grid" class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
+                <!-- Fotos serão inseridas aqui pelo JavaScript -->
+            </div>
+        </section>
 </BaseLayout>
