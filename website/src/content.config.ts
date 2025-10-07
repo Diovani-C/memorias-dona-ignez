@@ -13,9 +13,33 @@ const images = defineCollection({
       src: image(),
       alt: z.string(),
       raw: z.string().optional(),
-      categories: z.array(z.string()),
+      filters: z.array(z.string()),
     }),
 });
 
+const faces = defineCollection({
+  loader: file("src/data/images-filters.json", {
+    parser: (text) => JSON.parse(text).faces,
+  }),
+  schema: z.object({
+    id: z.string(),
+    displayValue: z.string(),
+  }),
+});
+
+const categories = defineCollection({
+  loader: file("src/data/images-filters.json", {
+    parser: (text) => JSON.parse(text).categories,
+  }),
+  schema: z.object({
+    id: z.string(),
+    displayValue: z.string(),
+  }),
+});
+
 // 4. Export a single `collections` object to register your collection(s)
-export const collections = { images };
+export const collections = {
+  images,
+  faces,
+  categories,
+};

@@ -1,41 +1,103 @@
 ---
-import { Image } from 'astro:assets';
 import { getCollection } from 'astro:content';
 import BaseLayout from '../../layouts/BaseLayout.astro'
-
+import GalleryPhoto from '../../components/GalleryPhoto.astro';
 
 const allImages = await getCollection("images");
+const allCategories = await getCollection("categories")
+const allFaces = await getCollection("faces")
 ---
 
-<BaseLayout title="Astro">
-
-    <ul>{
-allImages.map((image) => <Image src={image.data.src} alt={image.data.alt}/>)
-      }</ul>
-
-        <!-- Seção da Galeria -->
-        <section id="gallery" class="page-section hidden fade-in">
+<BaseLayout title="Galeria de Memórias">
+        <section >
             <h2 class="text-4xl font-title text-center mb-8">Galeria de Memórias</h2>
             
-            <!-- Filtros -->
             <div class="mb-10">
                 <div class="mb-6">
                     <h3 class="font-bold text-lg mb-3 text-center">Filtrar por Álbum:</h3>
                     <div id="album-filters" class="flex flex-wrap justify-center gap-2">
-                        <!-- Botões de filtro de álbum serão inseridos aqui -->
+                      {
+allCategories.map(({data, id}) => <button class=`filter-btn px-4 py-2 text-sm rounded-full transition-colors duration-200 ${id === 'all' ? 'active-filter' : 'bg-gray-200 hover:bg-gray-300'}` data-filter={id} data-type="album">{data.displayValue}</button>)
+                      }
                     </div>
                 </div>
                 <div>
                     <h3 class="font-bold text-lg mb-3 text-center">Filtrar por Pessoa:</h3>
                     <div id="people-filters" class="flex flex-wrap justify-center gap-2">
-                        <!-- Botões de filtro de pessoa serão inseridos aqui -->
+                      {
+allFaces.map(({data, id}) => <button class=`filter-btn px-4 py-2 text-sm rounded-full transition-colors duration-200 ${id === 'all' ? 'active-filter' : 'bg-gray-200 hover:bg-gray-300'}` data-filter={id} data-type="person">{data.displayValue}</button>)
+                      }
                     </div>
                 </div>
             </div>
 
-            <!-- Grade de Fotos -->
-            <div id="photo-grid" class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
-                <!-- Fotos serão inseridas aqui pelo JavaScript -->
+            <!-- Gallery Grid -->
+            <div class="columns-1 sm:columns-2 md:columns-3 lg:columns-4 xl:columns-5 gap-4 space-y-4">
+              {allImages.map((image) => <GalleryPhoto imageData={image} className='gallery-item'/>)}
             </div>
         </section>
 </BaseLayout>
+
+<script>
+  let currentAlbumFilter = 'all';
+  let currentPeopleFilter = 'all';
+
+  function applyFilters() {
+    if(currentAlbumFilter === 'all' && currentPeopleFilter === 'all') {
+      document.querySelectorAll('.gallery-item.hidden').forEach(photo => photo.classList.remove('hidden'));
+      return;
+    }
+
+
+    document.querySelectorAll('.gallery-item').forEach((galleryItem) => {
+      if (galleryItem instanceof HTMLElement) {
+        const filters = galleryItem.dataset.filters
+        if(!filters) return;
+
+        const albumMatch = currentAlbumFilter === 'all' || filters.includes(currentAlbumFilter);
+        const peopleMatch = currentPeopleFilter === 'all' || filters.includes(currentPeopleFilter);
+
+        if(albumMatch && peopleMatch) {
+          galleryItem.classList.remove("hidden")
+          return
+        }
+
+        galleryItem.classList.add('hidden')
+      }
+    })
+  }
+
+  document.querySelectorAll('.filter-btn').forEach(button => {
+    if (button instanceof HTMLElement) {
+      const filter = button.dataset.filter
+      const type = button.dataset.type
+
+      if(!filter || !type) throw "Filter or type not defined for the button " + button.innerText
+
+      button.addEventListener('click', () => {
+          if (type === 'album') {
+              currentAlbumFilter = filter;
+          } else if (type === 'person') {
+              currentPeopleFilter = filter;
+          }
+          
+          document.querySelectorAll(`.filter-btn[data-type="${type}"]`).forEach(btn => btn.classList.remove('active-filter', 'bg-gray-200', 'hover:bg-gray-300'));
+          button.classList.add('active-filter');
+          document.querySelectorAll(`.filter-btn[data-type="${type}"]:not(.active-filter)`).forEach(btn => btn.classList.add('bg-gray-200', 'hover:bg-gray-300'));
+
+          applyFilters();
+      });
+    }
+  });
+</script>
+
+<style>
+  .active-filter {
+      background-color: var(--color-gold-pale);
+      color: white;
+  }
+  /* Custom style to prevent images from breaking inside a column */
+  :global(.gallery-item) {
+      break-inside: avoid;
+  }
+</style>

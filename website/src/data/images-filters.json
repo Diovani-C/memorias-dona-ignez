@@ -1,0 +1,16 @@
+{
+  "faces": [
+    { "id": "all", "displayValue": "Todos" },
+    { "id": "ignez", "displayValue": "Dona Ignez" }
+  ],
+  "categories": [
+    {
+      "id": "all",
+      "displayValue": "Todos"
+    },
+    {
+      "id": "fragments",
+      "displayValue": "Fragmentos"
+    }
+  ]
+}

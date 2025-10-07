@@ -1,0 +1,18 @@
+---
+import { Image } from 'astro:assets';
+import type { CollectionEntry } from 'astro:content';
+
+interface Props {
+  imageData: CollectionEntry<'images'>,
+  className: string | null
+}
+
+const { imageData, className } = Astro.props;
+---
+
+<div class=`overflow-hidden rounded-lg shadow-md hover:shadow-xl transition-shadow duration-300 ease-in-out ${className}` data-filters={imageData.data.filters.join("-")} >
+  <a href={`/gallery/${imageData.id}`}   data-astro-prefetch>
+      <Image class='w-full h-auto' src={imageData.data.src} alt={imageData.data.alt} />
+  </a>
+</div>
+

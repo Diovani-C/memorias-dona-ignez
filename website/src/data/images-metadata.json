@@ -1,9 +1,15 @@
 [
   {
     "slug": "img01",
-    "src": "./img01.png",
+    "src": "./Fragmentos/img01.png",
     "alt": "this is a image",
-    "raw": "./raw/img01.png",
-    "categories": ["Fragmentos"]
+    "raw": "./Fragmentos/raw/img01.png",
+    "filters": ["fragments", "ignez"]
+  },
+  {
+    "slug": "img02",
+    "src": "./Fragmentos/img02.png",
+    "alt": "this is a image",
+    "filters": ["fragments"]
   }
 ]
