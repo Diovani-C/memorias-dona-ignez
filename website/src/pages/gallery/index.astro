@@ -17,7 +17,7 @@ const allFaces = await getCollection("faces")
                     <h3 class="font-bold text-lg mb-3 text-center">Filtrar por Álbum:</h3>
                     <div id="album-filters" class="flex flex-wrap justify-center gap-2">
                       {
-allCategories.map(({data, id}) => <button class=`filter-btn px-4 py-2 text-sm rounded-full transition-colors duration-200 ${id === 'all' ? 'active-filter' : 'bg-gray-200 hover:bg-gray-300'}` data-filter={id} data-type="album">{data.displayValue}</button>)
+                        allCategories.map(({data, id}) => <button class=`filter-btn px-4 py-2 text-sm rounded-full transition-colors duration-200 ${id === 'all' ? 'active-filter' : 'bg-gray-200 hover:bg-gray-300'}` data-filter={id} data-type="album">{data.displayValue}</button>)
                       }
                     </div>
                 </div>
@@ -25,7 +25,7 @@ allCategories.map(({data, id}) => <button class=`filter-btn px-4 py-2 text-sm ro
                     <h3 class="font-bold text-lg mb-3 text-center">Filtrar por Pessoa:</h3>
                     <div id="people-filters" class="flex flex-wrap justify-center gap-2">
                       {
-allFaces.map(({data, id}) => <button class=`filter-btn px-4 py-2 text-sm rounded-full transition-colors duration-200 ${id === 'all' ? 'active-filter' : 'bg-gray-200 hover:bg-gray-300'}` data-filter={id} data-type="person">{data.displayValue}</button>)
+                        allFaces.map(({data, id}) => <button class=`filter-btn px-4 py-2 text-sm rounded-full transition-colors duration-200 ${id === 'all' ? 'active-filter' : 'bg-gray-200 hover:bg-gray-300'}` data-filter={id} data-type="person">{data.displayValue}</button>)
                       }
                     </div>
                 </div>
@@ -67,27 +67,29 @@ allFaces.map(({data, id}) => <button class=`filter-btn px-4 py-2 text-sm rounded
     })
   }
 
-  document.querySelectorAll('.filter-btn').forEach(button => {
-    if (button instanceof HTMLElement) {
-      const filter = button.dataset.filter
-      const type = button.dataset.type
+  document.addEventListener("astro:page-load", () => {
+    document.querySelectorAll('.filter-btn').forEach(button => {
+      if (button instanceof HTMLElement) {
+        const filter = button.dataset.filter
+        const type = button.dataset.type
 
-      if(!filter || !type) throw "Filter or type not defined for the button " + button.innerText
+        if(!filter || !type) throw "Filter or type not defined for the button " + button.innerText
 
-      button.addEventListener('click', () => {
-          if (type === 'album') {
-              currentAlbumFilter = filter;
-          } else if (type === 'person') {
-              currentPeopleFilter = filter;
-          }
-          
-          document.querySelectorAll(`.filter-btn[data-type="${type}"]`).forEach(btn => btn.classList.remove('active-filter', 'bg-gray-200', 'hover:bg-gray-300'));
-          button.classList.add('active-filter');
-          document.querySelectorAll(`.filter-btn[data-type="${type}"]:not(.active-filter)`).forEach(btn => btn.classList.add('bg-gray-200', 'hover:bg-gray-300'));
+        button.addEventListener('click', () => {
+            if (type === 'album') {
+                currentAlbumFilter = filter;
+            } else if (type === 'person') {
+                currentPeopleFilter = filter;
+            }
+            
+            document.querySelectorAll(`.filter-btn[data-type="${type}"]`).forEach(btn => btn.classList.remove('active-filter', 'bg-gray-200', 'hover:bg-gray-300'));
+            button.classList.add('active-filter');
+            document.querySelectorAll(`.filter-btn[data-type="${type}"]:not(.active-filter)`).forEach(btn => btn.classList.add('bg-gray-200', 'hover:bg-gray-300'));
 
-          applyFilters();
-      });
-    }
+            applyFilters();
+        });
+      }
+    });
   });
 </script>
 

@@ -57,5 +57,7 @@ import BaseLayout from '../layouts/BaseLayout.astro'
       });
   }, { threshold: 0.1 });
 
-  document.querySelectorAll('.scroll-animate').forEach(el => observer.observe(el));
+  document.addEventListener("astro:page-load", () => {
+    document.querySelectorAll('.scroll-animate').forEach(el => observer.observe(el));
+  })
 </script>
