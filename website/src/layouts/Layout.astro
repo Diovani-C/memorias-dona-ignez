@@ -1,0 +1,109 @@
+---
+import "../styles/global.css";
+import { ClientRouter } from "astro:transitions";
+const { title, description } = Astro.props;
+---
+
+<html lang="pt-BR" class="scroll-smooth">
+  <head>
+    <meta charset="utf-8" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="generator" content={Astro.generator} />
+
+    <title>{title}</title>
+    <meta name="description" content={description}>
+    <meta property="og:title" content={title}>
+    <meta property="og:description" content={description}>
+    <meta property="og:image" content="https://www.yourwebsite.com/images/photo-restoration-example.jpg">
+    <meta property="og:url" content="https://www.yourwebsite.com/services/photo-restoration">
+    <meta property="og:type" content="website">
+
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Montserrat:wght@300;400;600&display=swap"
+      rel="stylesheet"
+    />
+
+    <ClientRouter />
+
+    <style is:global>
+      /* Configurações de fontes e cores personalizadas */
+      :root {
+        --font-title: "Playfair Display", serif;
+        --font-body: "Montserrat", sans-serif;
+        --color-cream: #fdf8f0;
+        --color-text: #4e4a47;
+        --color-sepia-light: #d9c6b5;
+        --color-gold-pale: #c4a484;
+      }
+
+      body {
+        font-family: var(--font-body);
+        background-color: var(--color-cream);
+        color: var(--color-text);
+      }
+
+      h1,
+      h2,
+      h3,
+      .font-title {
+        font-family: var(--font-title);
+      }
+    </style>
+  </head>
+  <body class="antialiased">
+    <header class="p-4 md:p-6 w-full sticky top-0 backdrop-blur-sm z-30">
+      <div class="flex justify-between items-center max-w-5xl mx-auto">
+        <h1
+          class="text-2xl md:text-3xl font-bold font-title"
+          style="color: var(--color-gold-pale);"
+        >
+          Ignes
+        </h1>
+        <nav>
+          <ul class="flex space-x-4 md:space-x-8 text-sm md:text-base">
+            <li>
+              <a
+                href="/"
+                class="hover:text-gray-900"
+                data-astro-prefetch="load">Início</a
+              >
+            </li>
+            <li>
+              <a
+                href="/gallery"
+                class="hover:text-gray-900"
+                data-astro-prefetch="load">Galeria</a
+              >
+            </li>
+          </ul>
+        </nav>
+      </div>
+    </header>
+    <main class="p-4 md:p-6 max-w-5xl mx-auto min-h-[85dvh]">
+      <slot />
+    </main>
+    <footer
+      class="text-center p-8 mt-12 border-t"
+      style="border-color: var(--color-sepia-light);"
+    >
+      <p class="text-sm mb-2" style="color: var(--color-text);">
+        Este memorial foi criado com amor por seu neto, Diovani Eduardo
+        Coelli, em homenagem à sua vida, sua história e para que suas memórias
+        nunca se percam.
+      </p>
+      <a
+        href="https://github.com/diovanicoelli"
+        target="_blank"
+        rel="noopener noreferrer"
+        class="text-sm hover:underline"
+        style="color: var(--color-gold-pale);"
+      >
+        Ver o projeto no GitHub
+      </a>
+    </footer>
+  </body>
+</html>

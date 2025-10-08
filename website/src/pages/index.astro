@@ -1,42 +1,42 @@
 ---
-import BaseLayout from '../layouts/BaseLayout.astro'
+import Layout from '../layouts/Layout.astro'
+import SectionBlock from '../components/SectionBlock.astro'
 ---
 
-<BaseLayout title="Astro">
-        <section class="page-section text-center">
-            <h2 class="text-4xl md:text-6xl font-bold font-title mb-4 scroll-animate">Memórias da dona Ignes</h2>
-            <p class="max-w-3xl mx-auto text-lg md:text-xl mb-12 scroll-animate">Um arquivo de amor e saudade, celebrando uma vida extraordinária através de momentos eternizados.</p>
-            
-            <div class="max-w-4xl mx-auto mb-16 scroll-animate">
-                <video class="w-full h-auto rounded-lg mask-[url(brush-mask.svg)] mask-cover mask-center" autoplay loop muted playsinline>
-                    <source src="https://www.w3schools.com/html/mov_bbb.mp4" type="video/mp4">
-                    Seu navegador não suporta vídeos.
-                </video>
-            </div>
-            
-            <div class="max-w-4xl mx-auto text-base md:text-lg space-y-8 leading-relaxed text-left md:text-center">
-                <p class="scroll-animate">Nascida em um tempo de mudanças, Ignes floresceu com uma graça e força que tocaram todos ao seu redor. Sua jornada foi tecida com os fios da dedicação à família, do amor incondicional e de uma risada contagiante que ecoava em cada canto da casa.</p>
+<Layout title="Memórias da dona Ignes">
+  <section class="text-center">
+    <h2 class="text-4xl md:text-6xl font-bold font-title mb-4 scroll-animate">Memórias da dona Ignes</h2>
+    <p class="max-w-3xl mx-auto text-lg md:text-xl mb-12 scroll-animate">Um arquivo de amor e saudade, celebrando uma vida extraordinária através de momentos eternizados.</p>
 
-                <div class="py-8 scroll-animate">
-                     <video class="w-full h-auto rounded-lg shadow-lg" autoplay loop muted playsinline>
-                        <source src="https://www.w3schools.com/tags/movie.mp4" type="video/mp4">
-                    Seu navegador não suporta vídeos.
-                    </video>
-                </div>
+    <div class="mx-auto mb-16 scroll-animate">
+      <video class="w-full h-auto rounded-lg mask-[url(brush-mask.svg)] mask-center mask-contain mask-no-repeat" autoplay loop muted playsinline>
+        <source src="https://www.w3schools.com/html/mov_bbb.mp4" type="video/mp4">
+        Seu navegador não suporta vídeos.
+      </video>
+    </div>
+  </section>
 
-                <p class="scroll-animate">Este espaço é uma humilde tentativa de capturar a essência de sua luz. Cada fotografia é uma janela para um momento precioso, uma história de alegria, um capítulo de sua vida rica e plena. Que estas memórias nos inspirem a viver com a mesma paixão e bondade que ela nos ensinou.</p>
-                <p class="scroll-animate">Ela não era apenas uma matriarca; era o coração da nossa família, a guardiã das nossas tradições e a contadora de histórias que nos unia. Sua ausência é sentida, mas seu legado de amor vive em cada um de nós.</p>
-            </div>
+  <SectionBlock>
+    <p class="scroll-animate">Nascida em um tempo de mudanças, Ignes floresceu com uma graça e força que tocaram todos ao seu redor. Sua jornada foi tecida com os fios da dedicação à família, do amor incondicional e de uma risada contagiante que ecoava em cada canto da casa.</p>
 
-            <div class="mt-16 text-center scroll-animate">
-      <a href="/gallery" data-astro-prefetch class="nav-link inline-block bg-gold-pale text-white font-bold py-3 px-8 rounded-full transition-transform duration-300 hover:scale-105" style="background-color: var(--color-gold-pale);">Ver a Galeria Completa</a>
-            </div>
-        </section>
+    <div class="py-8 scroll-animate">
+      <video class="w-full h-auto rounded-lg shadow-lg" autoplay loop muted playsinline>
+        <source src="https://www.w3schools.com/tags/movie.mp4" type="video/mp4">
+        Seu navegador não suporta vídeos.
+      </video>
+    </div>
 
-</BaseLayout>
+    <p class="scroll-animate">Este espaço é uma humilde tentativa de capturar a essência de sua luz. Cada fotografia é uma janela para um momento precioso, uma história de alegria, um capítulo de sua vida rica e plena. Que estas memórias nos inspirem a viver com a mesma paixão e bondade que ela nos ensinou.</p>
+    <p class="scroll-animate">Ela não era apenas uma matriarca; era o coração da nossa família, a guardiã das nossas tradições e a contadora de histórias que nos unia. Sua ausência é sentida, mas seu legado de amor vive em cada um de nós.</p>
+
+    <div class="mt-16 text-center scroll-animate">
+      <a href="/gallery" data-astro-prefetch class="inline-block bg-gold-pale text-white font-bold py-3 px-8 rounded-full transition-transform duration-300 hover:scale-105" style="background-color: var(--color-gold-pale);">Ver a Galeria Completa</a>
+    </div>
+  </SectionBlock>
+
+</Layout>
 
 <style>
-  /* Animações de rolagem */
   .scroll-animate {
       opacity: 0;
       transform: translateY(30px);
@@ -51,9 +51,9 @@ import BaseLayout from '../layouts/BaseLayout.astro'
 <script>
   const observer = new IntersectionObserver((entries) => {
       entries.forEach(entry => {
-          if (entry.isIntersecting) {
-              entry.target.classList.add('is-visible');
-          }
+        if (entry.isIntersecting) {
+            entry.target.classList.add('is-visible');
+        }
       });
   }, { threshold: 0.1 });
 

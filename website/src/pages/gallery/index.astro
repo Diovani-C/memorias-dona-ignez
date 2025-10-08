@@ -1,6 +1,6 @@
 ---
 import { getCollection } from 'astro:content';
-import BaseLayout from '../../layouts/BaseLayout.astro'
+import Layout from '../../layouts/Layout.astro'
 import GalleryPhoto from '../../components/GalleryPhoto.astro';
 
 const allImages = await getCollection("images");
@@ -8,7 +8,7 @@ const allCategories = await getCollection("categories")
 const allFaces = await getCollection("faces")
 ---
 
-<BaseLayout title="Galeria de Memórias">
+<Layout title="Galeria de Memórias">
         <section >
             <h2 class="text-4xl font-title text-center mb-8">Galeria de Memórias</h2>
             
@@ -36,7 +36,7 @@ const allFaces = await getCollection("faces")
               {allImages.map((image) => <GalleryPhoto imageData={image} className='gallery-item'/>)}
             </div>
         </section>
-</BaseLayout>
+</Layout>
 
 <script>
   let currentAlbumFilter = 'all';

@@ -1,5 +1,5 @@
 ---
-import BaseLayout from "../../layouts/BaseLayout.astro";
+import Layout from "../../layouts/Layout.astro";
 import { Image } from "astro:assets";
 import { getCollection } from "astro:content";
 
@@ -16,96 +16,93 @@ const { image } = Astro.props;
 const pageTitle = `Visualizar: `;
 ---
 
-<BaseLayout title={pageTitle}>
-  <div class="container mx-auto max-w-5xl px-4 py-8">
-    <a
-      href="/gallery"
-      class="inline-flex items-center gap-2 text-sm font-semibold transition-colors mb-8"
-      style="color: var(--color-text);"
-      aria-label="Voltar para a galeria"
-      data-astro-prefetch
+<Layout title={pageTitle}>
+  <a
+    href="/gallery"
+    class="inline-flex items-center gap-2 text-sm font-semibold transition-colors mb-8"
+    style="color: var(--color-text);"
+    aria-label="Voltar para a galeria"
+    data-astro-prefetch
+  >
+    <svg
+      xmlns="http://www.w3.org/2000/svg"
+      width="20"
+      height="20"
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      stroke-width="2"
+      stroke-linecap="round"
+      stroke-linejoin="round"
+      class="lucide lucide-arrow-left"
     >
-      <svg
-        xmlns="http://www.w3.org/2000/svg"
-        width="20"
-        height="20"
-        viewBox="0 0 24 24"
-        fill="none"
-        stroke="currentColor"
-        stroke-width="2"
-        stroke-linecap="round"
-        stroke-linejoin="round"
-        class="lucide lucide-arrow-left"
-      >
-        <path d="m12 19-7-7 7-7"></path>
-        <path d="M19 12H5"></path>
-      </svg>
-      Voltar para a galeria
-    </a>
+      <path d="m12 19-7-7 7-7"></path>
+      <path d="M19 12H5"></path>
+    </svg>
+    Voltar para a galeria
+  </a>
 
-    <!-- Visualizador da Imagem -->
+  <div
+      class="max-w-fit p-2 sm:p-4 bg-white rounded-xl shadow-lg mx-auto"
+    style="border: 1px solid var(--color-sepia-light);"
+  >
+    <Image
+      transition:name={image.id}
+      src={image.data.src}
+      alt={image.data.alt}
+      class="object-contain w-full max-h-[80dvh] min-w-0 rounded-lg"
+    />
+  </div>
+
     <div
-      class="w-full max-w-5xl max-h-[80vh] p-2 sm:p-4 bg-white rounded-xl shadow-lg grid place-items-center mx-auto"
-      style="border: 1px solid var(--color-sepia-light);"
+      class="flex items-center justify-center gap-3 mt-8 flex-shrink-0 w-full md:w-auto"
     >
-      <Image
-        transition:name={image.id}
-        src={image.data.src}
-        alt={image.data.alt}
-        class="object-contain max-w-full max-h-full min-h-0 rounded-lg"
-      />
-    </div>
-
-      <div
-        class="flex items-center justify-center gap-3 mt-8 flex-shrink-0 w-full md:w-auto"
+      <a
+        href={image.data.src.src}
+        download
+        class="action-button"
+        aria-label="Baixar imagem"
       >
-        <a
-          href={image.data.src.src}
-          download
-          class="action-button"
-          aria-label="Baixar imagem"
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          width="20"
+          height="20"
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="2"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+          class="lucide lucide-download"
         >
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            width="20"
-            height="20"
-            viewBox="0 0 24 24"
-            fill="none"
-            stroke="currentColor"
-            stroke-width="2"
-            stroke-linecap="round"
-            stroke-linejoin="round"
-            class="lucide lucide-download"
-          >
-            <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
-            <polyline points="7 10 12 15 17 10"></polyline>
-            <line x1="12" x2="12" y1="15" y2="3"></line>
-          </svg>
-          <span class="hidden sm:inline">Baixar</span>
-        </a>
+          <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+          <polyline points="7 10 12 15 17 10"></polyline>
+          <line x1="12" x2="12" y1="15" y2="3"></line>
+        </svg>
+        <span class="hidden sm:inline">Baixar</span>
+      </a>
 
-        <button id="share-btn" class="action-button" aria-label="Compartilhar imagem">
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            width="20"
-            height="20"
-            viewBox="0 0 24 24"
-            fill="none"
-            stroke="currentColor"
-            stroke-width="2"
-            stroke-linecap="round"
-            stroke-linejoin="round"
-            class="lucide lucide-share-2"
-          >
-            <circle cx="18" cy="5" r="3"></circle>
-            <circle cx="6" cy="12" r="3"></circle>
-            <circle cx="18" cy="19" r="3"></circle>
-            <line x1="8.59" x2="15.42" y1="13.51" y2="17.49"></line>
-            <line x1="15.41" x2="8.59" y1="6.51" y2="10.49"></line>
-          </svg>
-          <span class="hidden sm:inline">Compartilhar</span>
-        </button>
-    </div>
+      <button id="share-btn" class="action-button" aria-label="Compartilhar imagem">
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          width="20"
+          height="20"
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="2"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+          class="lucide lucide-share-2"
+        >
+          <circle cx="18" cy="5" r="3"></circle>
+          <circle cx="6" cy="12" r="3"></circle>
+          <circle cx="18" cy="19" r="3"></circle>
+          <line x1="8.59" x2="15.42" y1="13.51" y2="17.49"></line>
+          <line x1="15.41" x2="8.59" y1="6.51" y2="10.49"></line>
+        </svg>
+        <span class="hidden sm:inline">Compartilhar</span>
+      </button>
   </div>
   <!-- Estilos para os botões -->
   <style>
@@ -163,4 +160,4 @@ const pageTitle = `Visualizar: `;
       });
     }
   </script>
-</BaseLayout>
+</Layout>
