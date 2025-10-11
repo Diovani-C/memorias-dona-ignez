@@ -1,15 +1,15 @@
 [
   {
-    "slug": "acfee910-c98",
-    "src": "./images/fragments/img02.png",
+    "slug": "b2f69ccc-ad7",
+    "src": "./fragments/img02.png",
     "alt": "this is a image 02",
     "filters": [
       "fragments"
     ]
   },
   {
-    "slug": "e931549f-061",
-    "src": "./images/fragments/img01.png",
+    "slug": "0e965b20-8c9",
+    "src": "./fragments/img01.png",
     "alt": "this is a image 01",
     "filters": [
       "fragments",
