@@ -1,0 +1,364 @@
+---
+import Layout from "../../layouts/Layout.astro"
+---
+<Layout>
+  <div class="container mx-auto p-4 md:p-8">
+      <header class="text-center mb-8">
+          <h1 class="text-4xl md:text-5xl font-bold text-gray-900">Face Tagger & Exporter</h1>
+          <p class="text-md text-gray-600 mt-2">Upload your photos, tag the faces, and export the data as a JSON file.</p>
+      </header>
+
+      <!-- Loading Modal -->
+      <div id="loading-modal" class="hidden fixed inset-0 bg-gray-900 bg-opacity-75 flex items-center justify-center z-50">
+          <div class="bg-white p-8 rounded-lg shadow-xl text-center">
+              <div class="loader mx-auto"></div>
+              <p id="loading-text" class="mt-4 text-lg font-medium text-gray-700">Loading models...</p>
+          </div>
+      </div>
+
+      <!-- Main Content -->
+      <main id="main-content" class="space-y-8">
+          <!-- Step 1: Upload Images -->
+          <section id="upload-section" class="bg-white p-6 rounded-xl shadow-lg">
+              <h2 class="text-2xl font-semibold mb-4 text-gray-800">Step 1: Upload Photos</h2>
+              <div class="border-2 border-dashed border-gray-300 rounded-lg p-8 text-center cursor-pointer hover:border-blue-500 transition-colors" id="drop-zone">
+                  <input type="file" id="image-upload" multiple accept="image/*" class="hidden">
+                  <p class="text-gray-500">Drag & drop files here, or <span class="text-blue-600 font-semibold">click to select files</span>.</p>
+              </div>
+              <div id="image-preview-grid" class="mt-6 grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-4"></div>
+              <div class="mt-6 text-center">
+                  <button id="process-button" class="bg-blue-600 text-white font-bold py-3 px-8 rounded-lg shadow-md hover:bg-blue-700 disabled:bg-gray-400 disabled:cursor-not-allowed transition-transform transform hover:scale-105" disabled>
+                      Process Images
+                  </button>
+              </div>
+          </section>
+
+          <!-- Step 2: Tag Faces -->
+          <section id="tagging-section" class="hidden bg-white p-6 rounded-xl shadow-lg">
+              <h2 class="text-2xl font-semibold mb-4 text-gray-800">Step 2: Name the Faces</h2>
+              <p class="text-gray-600 mb-6">We found the unique faces below. Assign a name to each person.</p>
+              <div id="faces-to-tag" class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-6"></div>
+          </section>
+
+          <!-- Step 3: Export JSON -->
+          <section id="export-section" class="hidden bg-white p-6 rounded-xl shadow-lg">
+              <h2 class="text-2xl font-semibold mb-4 text-gray-800">Step 3: Export Your Data</h2>
+              <p class="text-gray-600 mb-6">All faces have been tagged. You can now download the result as a JSON file.</p>
+              <div class="text-center">
+                    <button id="download-json" class="bg-green-600 text-white font-bold py-3 px-8 rounded-lg shadow-md hover:bg-green-700 transition-transform transform hover:scale-105">
+                      Download JSON
+                  </button>
+              </div>
+              <div class="mt-6">
+                  <h3 class="font-semibold text-lg mb-2">JSON Preview:</h3>
+                  <pre id="json-preview" class="bg-gray-800 text-white p-4 rounded-lg text-sm overflow-auto max-h-96"><code></code></pre>
+              </div>
+          </section>
+      </main>
+  </div>
+
+  <!-- Toast Notification -->
+  <div id="toast" class="toast"></div>
+</Layout>
+
+<script is:inline src="https://cdn.jsdelivr.net/npm/face-api.js@0.22.2/dist/face-api.min.js"></script>
+
+<script is:inline>
+  // --- DOM Elements ---
+  const loadingModal = document.getElementById('loading-modal');
+  const loadingText = document.getElementById('loading-text');
+  const dropZone = document.getElementById('drop-zone');
+  const imageUpload = document.getElementById('image-upload');
+  const imagePreviewGrid = document.getElementById('image-preview-grid');
+  const processButton = document.getElementById('process-button');
+  const taggingSection = document.getElementById('tagging-section');
+  const facesToTag = document.getElementById('faces-to-tag');
+  const exportSection = document.getElementById('export-section');
+  const downloadJsonButton = document.getElementById('download-json');
+  const jsonPreview = document.querySelector('#json-preview code');
+  const toast = document.getElementById('toast');
+
+  // --- State Management ---
+  let uploadedFiles = [];
+  let faceData = [];
+  let faceMatcher = null;
+  const FACE_SIMILARITY_THRESHOLD = 0.5; // Adjusted for better matching
+
+  // --- Utility Functions ---
+  function showToast(message) {
+      toast.textContent = message;
+      toast.classList.add('show');
+      setTimeout(() => {
+          toast.classList.remove('show');
+      }, 3000);
+  }
+
+  // --- Core Logic ---
+  async function loadModels() {
+      const MODEL_URL = 'https://cdn.jsdelivr.net/gh/justadudewhohacks/face-api.js@0.22.2/weights';
+      loadingModal.classList.remove('hidden');
+      loadingText.textContent = 'Loading core models...';
+      await faceapi.nets.ssdMobilenetv1.loadFromUri(MODEL_URL);
+      loadingText.textContent = 'Loading face landmark models...';
+      await faceapi.nets.faceLandmark68Net.loadFromUri(MODEL_URL);
+      loadingText.textContent = 'Loading face recognition models...';
+      await faceapi.nets.faceRecognitionNet.loadFromUri(MODEL_URL);
+      loadingModal.classList.add('hidden');
+  }
+
+  function handleFiles(files) {
+      const newFiles = Array.from(files).filter(file => file.type.startsWith('image/'));
+      if (newFiles.length === 0) return;
+
+      uploadedFiles.push(...newFiles);
+      imagePreviewGrid.innerHTML = ''; // Clear previous previews
+      uploadedFiles.forEach(file => {
+          const reader = new FileReader();
+          reader.onload = (e) => {
+              const imgContainer = document.createElement('div');
+              imgContainer.className = 'relative rounded-lg overflow-hidden aspect-square';
+              const img = document.createElement('img');
+              img.src = e.target.result;
+              img.className = 'w-full h-full object-cover';
+              imgContainer.appendChild(img);
+              imagePreviewGrid.appendChild(imgContainer);
+          };
+          reader.readAsDataURL(file);
+      });
+
+      if (uploadedFiles.length > 0) {
+          processButton.disabled = false;
+      }
+  }
+  
+  async function processImages() {
+      if (uploadedFiles.length === 0) {
+          showToast("Please upload images first.");
+          return;
+      }
+
+      loadingModal.classList.remove('hidden');
+      faceData = [];
+      let uniqueDescriptors = [];
+      let labeledFaceDescriptors = [];
+
+      for (let i = 0; i < uploadedFiles.length; i++) {
+          const file = uploadedFiles[i];
+          const imgUrl = URL.createObjectURL(file);
+          const img = await faceapi.fetchImage(imgUrl);
+          
+          loadingText.textContent = `Processing image ${i + 1} of ${uploadedFiles.length}...`;
+
+          const detections = await faceapi.detectAllFaces(img)
+              .withFaceLandmarks()
+              .withFaceDescriptors();
+          
+          const imageResult = {
+              img: file.name,
+              faces: []
+          };
+
+          for (const detection of detections) {
+              const descriptor = detection.descriptor;
+              
+              // Check if this face is similar to an already found unique face
+              let bestMatch = { label: 'unknown', distance: 1.0 };
+              labeledFaceDescriptors.forEach(ld => {
+                  const distance = faceapi.euclideanDistance(descriptor, ld.descriptor);
+                  if (distance < bestMatch.distance && distance < FACE_SIMILARITY_THRESHOLD) {
+                      bestMatch = { label: ld.label, distance };
+                  }
+              });
+
+              let personId;
+              if (bestMatch.label === 'unknown') {
+                  // This is a new, unique face
+                  personId = `person${uniqueDescriptors.length}`;
+                  uniqueDescriptors.push({ id: personId, descriptor: descriptor, detection: detection, img: img });
+                  // Add to labeled descriptors for future comparisons in this run
+                  labeledFaceDescriptors.push({ label: personId, descriptor: descriptor });
+              } else {
+                  personId = bestMatch.label;
+              }
+
+              imageResult.faces.push(personId);
+          }
+          faceData.push(imageResult);
+      }
+
+      loadingModal.classList.add('hidden');
+      displayFacesForTagging(uniqueDescriptors);
+  }
+
+  async function displayFacesForTagging(uniqueDescriptors) {
+      facesToTag.innerHTML = '';
+      if (uniqueDescriptors.length === 0) {
+            showToast("No faces were detected in the uploaded images.");
+            taggingSection.classList.add('hidden');
+            return;
+      }
+      
+      taggingSection.classList.remove('hidden');
+
+      for (const item of uniqueDescriptors) {
+          const face = item.detection;
+          const canvas = document.createElement('canvas');
+          const box = face.detection.box;
+          
+          // Add padding to the crop
+          const padding = box.width * 0.3;
+          const paddedBox = new faceapi.Rect(
+              Math.max(0, box.x - padding),
+              Math.max(0, box.y - padding),
+              box.width + padding * 2,
+              box.height + padding * 2
+          );
+
+          canvas.width = 150;
+          canvas.height = 150;
+          const ctx = canvas.getContext('2d');
+          
+          // Ensure the crop does not go out of image bounds
+          const sx = Math.max(0, paddedBox.x);
+          const sy = Math.max(0, paddedBox.y);
+          const sw = Math.min(item.img.width - sx, paddedBox.width);
+          const sh = Math.min(item.img.height - sy, paddedBox.height);
+
+          ctx.drawImage(item.img, sx, sy, sw, sh, 0, 0, 150, 150);
+
+          const container = document.createElement('div');
+          container.className = 'face-tag flex flex-col items-center p-4 bg-gray-50 rounded-lg shadow-md';
+          container.appendChild(canvas);
+          
+          const input = document.createElement('input');
+          input.type = 'text';
+          input.placeholder = `Name for ${item.id}`;
+          input.dataset.personId = item.id;
+          input.className = 'mt-3 p-2 border border-gray-300 rounded-md w-full text-center focus:ring-2 focus:ring-blue-500 focus:border-transparent';
+          input.addEventListener('input', updateJsonData);
+
+          container.appendChild(input);
+          facesToTag.appendChild(container);
+      }
+  }
+  
+  function updateJsonData() {
+      const nameInputs = document.querySelectorAll('#faces-to-tag input');
+      const nameMap = {};
+      let allNamed = true;
+
+      nameInputs.forEach(input => {
+          const personId = input.dataset.personId;
+          const name = input.value.trim();
+          if (name) {
+              nameMap[personId] = name;
+          } else {
+              allNamed = false;
+          }
+      });
+
+      if (Object.keys(nameMap).length === 0) {
+            exportSection.classList.add('hidden');
+            return;
+      }
+
+      const finalJson = faceData.map(image => ({
+          img: image.img,
+          faces: image.faces.map(personId => nameMap[personId] || personId).filter(name => nameMap[name] !== "") // Only include named faces
+      })).map(image => ({ // Filter out images with no named faces
+          ...image,
+          faces: image.faces.filter(faceName => nameMap.hasOwnProperty(faceName) || Object.values(nameMap).includes(faceName))
+      })).filter(image => image.faces.length > 0);
+
+      jsonPreview.textContent = JSON.stringify(finalJson, null, 2);
+
+      if (allNamed && finalJson.length > 0) {
+          exportSection.classList.remove('hidden');
+      } else {
+          exportSection.classList.add('hidden');
+      }
+  }
+  
+  function downloadJson() {
+      const jsonString = jsonPreview.textContent;
+      const blob = new Blob([jsonString], { type: 'application/json' });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = 'face_data.json';
+      document.body.appendChild(a);
+      a.click();
+      document.body.removeChild(a);
+      URL.revokeObjectURL(url);
+  }
+
+  // --- Event Listeners ---
+  dropZone.addEventListener('click', () => imageUpload.click());
+  dropZone.addEventListener('dragover', (e) => {
+      e.preventDefault();
+      dropZone.classList.add('border-blue-500', 'bg-blue-50');
+  });
+  dropZone.addEventListener('dragleave', () => {
+      dropZone.classList.remove('border-blue-500', 'bg-blue-50');
+  });
+  dropZone.addEventListener('drop', (e) => {
+      e.preventDefault();
+      dropZone.classList.remove('border-blue-500', 'bg-blue-50');
+      handleFiles(e.dataTransfer.files);
+  });
+  imageUpload.addEventListener('change', (e) => handleFiles(e.target.files));
+  processButton.addEventListener('click', processImages);
+  downloadJsonButton.addEventListener('click', downloadJson);
+  
+  // --- Initialization ---
+  window.onload = loadModels;
+
+</script>
+
+
+<style>
+  body {
+      font-family: 'Inter', sans-serif;
+      background-color: #f0f2f5; /* Light gray background for a softer look */
+  }
+  .loader {
+      border: 5px solid #f3f3f3;
+      border-top: 5px solid #3498db;
+      border-radius: 50%;
+      width: 50px;
+      height: 50px;
+      animation: spin 1s linear infinite;
+  }
+  @keyframes spin {
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(360deg); }
+  }
+  .face-tag {
+      transition: all 0.2s ease-in-out;
+  }
+  .face-tag:hover {
+      transform: scale(1.05);
+      box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+  }
+  .toast {
+      visibility: hidden;
+      min-width: 250px;
+      margin-left: -125px;
+      background-color: #333;
+      color: #fff;
+      text-align: center;
+      border-radius: 8px;
+      padding: 16px;
+      position: fixed;
+      z-index: 100;
+      left: 50%;
+      bottom: 30px;
+      opacity: 0;
+      transition: opacity 0.3s, visibility 0.3s, bottom 0.3s;
+  }
+  .toast.show {
+      visibility: visible;
+      opacity: 1;
+      bottom: 50px;
+  }
+</style>
