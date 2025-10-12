@@ -18,13 +18,11 @@ import { getGoogleAI, getInputFiles } from "./utils.ts";
 
 // --- Configuration ---
 const RESTORE_TASK_PROMPT = `You are a photo restoration and enhancement specialist. Your task is to meticulously restore the provided old photograph to its highest possible quality, making it look as if it was captured recently with professional equipment, while preserving the original style, lighting, and atmosphere without adding new elements or changing the identity of the people.
-
 Repair Physical Damage: Systematically remove all forms of physical degradation. This includes repairing scratches, tears, creases, dust spots, chemical stains, and any other imperfections and missing details that detract from the original scene.
 Correct Tonal and Color Issues: 
 	If the image is black and white or sepia-toned, produce realistically colorized version, carefully colorize the image, keeping skin tones, clothing, objects, and background realistic.
 	If the image originally had color but has faded or discolored, restore its original vibrancy, correct any color shifts, and enhance overall color accuracy and saturation to a natural level.
-Enhance Clarity and Detail: Sharpen soft or blurry areas without creating artifacts. Recover lost textures and fine details in faces, clothing, hair, objects, and backgrounds. Improve overall image clarity and definition.
-Final Output: Present the final restored image in high resolution, looking natural, authentic, and free from any artificial or over-processed appearance. The essence and integrity of the original photograph must be maintained.`;
+Enhance Clarity and Detail: Sharpen soft or blurry areas without creating artifacts. Recover lost textures and fine details in faces, clothing, hair, objects, and backgrounds. Improve overall image clarity and definition.`;
 
 const RESTORE_TASK_MODEL = "gemini-2.5-flash-image";
 
