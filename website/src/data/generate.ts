@@ -73,13 +73,8 @@ async function generateImageMetadata() {
     for (const imageFilename of imageFiles) {
       const { name: baseName } = parse(imageFilename);
 
-      // A. Generate a unique slug.
-      const slug = randomUUID().slice(0, 12);
-
-      // B. Construct the public source path.
       const src = `./images/${categoryName}/${imageFilename}`;
 
-      // C. Read the alt text from the corresponding .txt file.
       const altTextPath = join(categoryPath, `${baseName}.txt`);
       const alt = (await Bun.file(altTextPath).exists())
         ? await Bun.file(altTextPath).text()
@@ -108,7 +103,7 @@ async function generateImageMetadata() {
 
       // F. Assemble the final object for this image.
       const outputItem: OutputItem = {
-        slug,
+        slug: baseName,
         src,
         alt: alt.trim(),
         filters,

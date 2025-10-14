@@ -245,15 +245,12 @@ import Layout from "../../layouts/Layout.astro"
   function updateJsonData() {
       const nameInputs = document.querySelectorAll('#faces-to-tag input');
       const nameMap = {};
-      let allNamed = true;
 
       nameInputs.forEach(input => {
           const personId = input.dataset.personId;
           const name = input.value.trim();
           if (name) {
               nameMap[personId] = name;
-          } else {
-              allNamed = false;
           }
       });
 
@@ -272,7 +269,7 @@ import Layout from "../../layouts/Layout.astro"
 
       jsonPreview.textContent = JSON.stringify(finalJson, null, 2);
 
-      if (allNamed && finalJson.length > 0) {
+      if (finalJson.length > 0) {
           exportSection.classList.remove('hidden');
       } else {
           exportSection.classList.add('hidden');

@@ -1,7 +1,12 @@
 {
   "faces": [
     { "id": "all", "displayValue": "Todos" },
-    { "id": "ignez", "displayValue": "Dona Ignez" }
+    { "id": "ignez", "displayValue": "Dona Ignez" },
+    { "id": "celestino", "displayValue": "Celestino" },
+    { "id": "ivani", "displayValue": "Ivani" },
+    { "id": "gilmar", "displayValue": "Gilmar" },
+    { "id": "idemar", "displayValue": "Idemar" },
+    { "id": "gilberto", "displayValue": "Gilberto" }
   ],
   "categories": [
     {
@@ -10,7 +15,23 @@
     },
     {
       "id": "fragments",
-      "displayValue": "Fragmentos"
+      "displayValue": "Fragmentos 📸"
+    },
+    {
+      "id": "bodas-ouro",
+      "displayValue": "Bodas de Ouro 🪙"
+    },
+    {
+      "id": "bodas-diamante",
+      "displayValue": "Bodas de Diamante 💎"
+    },
+    {
+      "id": "viagens",
+      "displayValue": "Viagens 🧳"
+    },
+    {
+      "id": "celestino-80",
+      "displayValue": "80 Anos Celestino 🎂"
     }
   ]
 }

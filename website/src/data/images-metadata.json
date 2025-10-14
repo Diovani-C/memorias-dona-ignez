@@ -1,14 +1,725 @@
 [
   {
-    "slug": "acfee910-c98",
-    "src": "./images/fragments/img02.png",
-    "alt": "this is a image 02",
+    "slug": "0fbef2b8-4e7",
+    "src": "./images/bodas-ouro/04_d0shay1d.jpg",
+    "alt": "Quatro convidados de casamento, dois homens e duas mulheres, estão em pé na nave da igreja aplaudindo.",
     "filters": [
-      "fragments"
+      "bodas-ouro",
+      "gilmar",
+      "gilberto",
+      "ivani",
+      "celestino",
+      "ignez"
     ]
   },
   {
-    "slug": "e931549f-061",
+    "slug": "9980f139-4f5",
+    "src": "./images/bodas-ouro/62_4pkf8b68.jpg",
+    "alt": "Três mulheres sorrindo para a câmera, segurando buquês de flores; a da esquerda usa um vestido azul de renda e um colar de pérolas, a do meio um vestido turquesa com detalhes dourados nos ombros, e a da direita um vestido branco de renda e óculos.",
+    "filters": [
+      "bodas-ouro",
+      "ignez"
+    ]
+  },
+  {
+    "slug": "a5b2ae2e-fd9",
+    "src": "./images/bodas-ouro/34_dr6sfj6h.jpg",
+    "alt": "Seis pessoas estão posando para uma foto de grupo, com três homens e três mulheres, todos elegantemente vestidos em um ambiente de celebração, possivelmente um casamento ou evento formal.",
+    "filters": [
+      "bodas-ouro",
+      "ivani",
+      "ignez",
+      "celestino"
+    ]
+  },
+  {
+    "slug": "7c008cfc-b76",
+    "src": "./images/bodas-ouro/61_jdli81p8.jpg",
+    "alt": "Um grupo de oito pessoas, três homens e cinco mulheres, estão posando para uma foto dentro de casa em um evento formal.",
+    "filters": [
+      "bodas-ouro",
+      "celestino",
+      "ignez"
+    ]
+  },
+  {
+    "slug": "1a8cf7b9-cbf",
+    "src": "./images/bodas-ouro/29_f8ws4a6v.jpg",
+    "alt": "Três homens caucasianos de meia-idade, vestindo ternos escuros, em pé lado a lado na frente de árvores e arbustos verdes, sorrindo para a câmera.",
+    "filters": [
+      "bodas-ouro",
+      "gilmar",
+      "idemar",
+      "gilberto"
+    ]
+  },
+  {
+    "slug": "7133e51a-47e",
+    "src": "./images/bodas-ouro/68_akwnz6xx.jpg",
+    "alt": "Um grupo de quinze pessoas, incluindo três crianças, posa informalmente para uma foto contra uma parede branca. Eles estão vestidos elegantemente em trajes de festa e sorriem para a câmera, com muitos casais entrelaçados ou próximos, e os homens usam ternos escuros.",
+    "filters": [
+      "bodas-ouro",
+      "idemar",
+      "gilberto"
+    ]
+  },
+  {
+    "slug": "d1257493-3c5",
+    "src": "./images/bodas-ouro/45_8fpkmkeo.jpg",
+    "alt": "Seis adultos estão em pé, lado a lado, em uma linha, dentro de uma sala. O homem do meio veste um terno preto com uma camisa branca e uma gravata amarela. À esquerda dele, uma mulher de vestido branco segura um buquê de flores amarelas. À esquerda dela, uma mulher de vestido azul. À esquerda dela, um homem de camisa branca e calças escuras. À direita do homem do meio, uma mulher de vestido azul, segurando um buquê de flores amarelas e brancas, e um homem de terno preto.",
+    "filters": [
+      "bodas-ouro",
+      "celestino",
+      "ignez",
+      "ivani"
+    ]
+  },
+  {
+    "slug": "afdf56a3-150",
+    "src": "./images/bodas-ouro/49_59ie91tn.jpg",
+    "alt": "Três casais adultos posando para uma foto de família em um evento, com a noiva no centro em um vestido branco e os outros em roupas formais escuras e azuis.",
+    "filters": [
+      "bodas-ouro",
+      "celestino",
+      "ignez",
+      "ivani"
+    ]
+  },
+  {
+    "slug": "e71d0572-73b",
+    "src": "./images/bodas-ouro/65_vhbgbcwu.jpg",
+    "alt": "Três meninas, a do meio mais alta, sorrindo para a câmera, com os braços uma da outra, em frente a uma parede lisa.",
+    "filters": [
+      "bodas-ouro"
+    ]
+  },
+  {
+    "slug": "1f51952e-4b7",
+    "src": "./images/bodas-ouro/30_4omllngl.jpg",
+    "alt": "Um grande grupo de pessoas sorridentes, vestidas formalmente, posa para uma foto em um gramado verde com árvores e edifícios ao fundo.",
+    "filters": [
+      "bodas-ouro",
+      "gilmar",
+      "celestino",
+      "idemar",
+      "ignez",
+      "gilberto",
+      "ivani"
+    ]
+  },
+  {
+    "slug": "d84f5b90-a09",
+    "src": "./images/bodas-ouro/51_hyoudlks.jpg",
+    "alt": "Seis adultos posam para uma foto em um evento formal, com três casais lado a lado; o casal do meio é o foco principal.",
+    "filters": [
+      "bodas-ouro",
+      "celestino",
+      "ivani",
+      "ignez"
+    ]
+  },
+  {
+    "slug": "6b155595-ab7",
+    "src": "./images/bodas-ouro/16_36kh46my.jpg",
+    "alt": "Um grupo de pessoas felizes se reúne em um evento, algumas sentadas e outras em pé, sorrindo e rindo.",
+    "filters": [
+      "bodas-ouro",
+      "ivani",
+      "ignez",
+      "celestino"
+    ]
+  },
+  {
+    "slug": "fb5ebbbe-5c5",
+    "src": "./images/bodas-ouro/70_0ok8cceg.jpg",
+    "alt": "Quatro mulheres jovens em vestidos formais se destacam em um plano de fundo leve.",
+    "filters": [
+      "bodas-ouro"
+    ]
+  },
+  {
+    "slug": "504237f5-6c4",
+    "src": "./images/bodas-ouro/19_n2i5qid3.jpg",
+    "alt": "Um homem idoso de terno e óculos segura um porta-retratos com a imagem de um cavalo e um homem, rindo ao lado de uma mulher de vestido branco com um buquê amarelo, em um cenário externo gramado.",
+    "filters": [
+      "bodas-ouro",
+      "gilmar",
+      "celestino"
+    ]
+  },
+  {
+    "slug": "16fcc201-1ab",
+    "src": "./images/bodas-ouro/60_bw3s88ts.jpg",
+    "alt": "Um homem, uma mulher e duas meninas sorrindo posam para uma foto de família.",
+    "filters": [
+      "bodas-ouro",
+      "ignez",
+      "celestino"
+    ]
+  },
+  {
+    "slug": "4bad4f6a-26a",
+    "src": "./images/bodas-ouro/47_sciqtai7.jpg",
+    "alt": "Seis pessoas, incluindo dois casais, posam para uma foto em um casamento.",
+    "filters": [
+      "bodas-ouro",
+      "ignez",
+      "ivani",
+      "celestino"
+    ]
+  },
+  {
+    "slug": "96969419-aba",
+    "src": "./images/bodas-ouro/48_2libyhrt.jpg",
+    "alt": "Seis pessoas de diferentes idades em trajes formais posam para uma foto em um casamento.",
+    "filters": [
+      "bodas-ouro",
+      "ignez",
+      "ivani"
+    ]
+  },
+  {
+    "slug": "63c2ffea-0b7",
+    "src": "./images/bodas-ouro/43_zfniurch.jpg",
+    "alt": "Seis adultos em trajes formais posando para uma foto de família em um casamento.",
+    "filters": [
+      "bodas-ouro",
+      "ivani",
+      "celestino",
+      "ignez"
+    ]
+  },
+  {
+    "slug": "10294fbb-fe9",
+    "src": "./images/bodas-ouro/66_a6z2ih2b.jpg",
+    "alt": "Um homem mais velho com óculos e camisa polo bege sorri para uma mulher de óculos com um vestido de renda branca, que segura um buquê de rosas pêssego e brancas, enquanto se cumprimentam com as mãos, com duas figuras masculinas desfocadas ao fundo.",
+    "filters": [
+      "bodas-ouro",
+      "gilmar",
+      "celestino"
+    ]
+  },
+  {
+    "slug": "ebe744c3-434",
+    "src": "./images/bodas-ouro/37_w40juv03.jpg",
+    "alt": "Cinco pessoas estão em pé em uma fileira horizontal contra uma parede estampada em tons de creme. Da esquerda para a direita: uma mulher mais velha de vestido branco com um buquê, um homem de terno preto e gravata dourada, uma mulher de vestido azul vibrante com um buquê e um colar de pérolas, um homem de terno preto e uma mulher de blusa azul e calça cinza. As pessoas de terno estão de braços dados com as mulheres ao lado delas.",
+    "filters": [
+      "bodas-ouro",
+      "ignez",
+      "celestino",
+      "ivani"
+    ]
+  },
+  {
+    "slug": "877c29af-667",
+    "src": "./images/bodas-ouro/24_qanjerq3.jpg",
+    "alt": "Quatro pessoas sorridentes em um gramado verde, com uma mulher de vestido branco no centro segurando dois buquês e um homem à direita erguendo uma calcinha de bolinhas.",
+    "filters": [
+      "bodas-ouro",
+      "celestino",
+      "ignez"
+    ]
+  },
+  {
+    "slug": "a5690598-8a9",
+    "src": "./images/bodas-ouro/14_g1uzs425.jpg",
+    "alt": "Quatro pessoas brindam com taças de champanhe; um homem de óculos abre uma garrafa de champanhe enquanto os outros três sorriem.",
+    "filters": [
+      "bodas-ouro",
+      "ignez",
+      "celestino",
+      "ivani"
+    ]
+  },
+  {
+    "slug": "5fb17c8e-4f5",
+    "src": "./images/bodas-ouro/57_dtylzacd.jpg",
+    "alt": "Grupo de seis pessoas, incluindo duas crianças, em pé e posando para uma foto em um cenário claro e decorado, provavelmente em um evento formal.",
+    "filters": [
+      "bodas-ouro",
+      "ignez",
+      "celestino"
+    ]
+  },
+  {
+    "slug": "b7566caf-817",
+    "src": "./images/bodas-ouro/38_hennvzmt.jpg",
+    "alt": "Seis pessoas, incluindo um homem de camisa branca, um homem e uma mulher em trajes de casamento brancos e azuis, e outros casais em roupas formais, posam para uma foto em um evento formal.",
+    "filters": [
+      "bodas-ouro",
+      "celestino",
+      "ignez",
+      "ivani"
+    ]
+  },
+  {
+    "slug": "b02319a4-a7d",
+    "src": "./images/bodas-ouro/59_jxvv4abi.jpg",
+    "alt": "Um menino pequeno de camisa polo listrada e shorts escuros está no colo de um homem barbudo de camisa branca e jeans, enquanto uma mulher de vestido branco, segurando um buquê de flores amarelas e brancas, e um homem de terno preto e gravata dourada, estão parados ao lado de uma mulher sorridente de blusa preta e calças vermelhas.",
+    "filters": [
+      "bodas-ouro",
+      "ignez",
+      "celestino"
+    ]
+  },
+  {
+    "slug": "3ac6c370-569",
+    "src": "./images/bodas-ouro/46_vnexb881.jpg",
+    "alt": "Seis adultos de pé em um evento formal, três homens e três mulheres, todos olhando para a câmera, com flores e cortinas no fundo.",
+    "filters": [
+      "bodas-ouro",
+      "ivani",
+      "ignez",
+      "celestino"
+    ]
+  },
+  {
+    "slug": "13787ff7-b5b",
+    "src": "./images/bodas-ouro/09_ii8kyhdk.jpg",
+    "alt": "Um padre, de costas para a câmera, está celebrando uma missa em uma igreja cheia, com o altar e um crucifixo ao fundo.",
+    "filters": [
+      "bodas-ouro",
+      "ignez",
+      "ivani",
+      "celestino"
+    ]
+  },
+  {
+    "slug": "44679abe-217",
+    "src": "./images/bodas-ouro/27_im7a2x4p.jpg",
+    "alt": "Um casal mais velho se beija enquanto cada um segura uma peça de roupa íntima artesanal de cores vivas em um jardim.",
+    "filters": [
+      "bodas-ouro",
+      "ignez"
+    ]
+  },
+  {
+    "slug": "6e588938-7d8",
+    "src": "./images/bodas-ouro/15_27denslm.jpg",
+    "alt": "Duas mulheres, uma mais velha de vestido branco e outra mais jovem de vestido azul, estão abraçadas e sorrindo ao ar livre, segurando um buquê de flores.",
+    "filters": [
+      "bodas-ouro",
+      "ivani",
+      "ignez"
+    ]
+  },
+  {
+    "slug": "31ee75f9-419",
+    "src": "./images/bodas-ouro/35_oykqnm4a.jpg",
+    "alt": "Quatro mulheres, provavelmente de três gerações, posam juntas em uma celebração; a mulher mais velha no centro segura uma cesta decorada, e as outras três a abraçam, todas sorrindo.",
+    "filters": [
+      "bodas-ouro",
+      "ignez"
+    ]
+  },
+  {
+    "slug": "b8f26c7b-189",
+    "src": "./images/bodas-ouro/25_m2rirwk6.jpg",
+    "alt": "Um casal sorridente em um jardim, a mulher em um vestido branco exibindo uma calcinha floral colorida e o homem em um terno preto com gravata amarela segurando uma cueca boxer branca com detalhes roxos e uma mancha vermelha.",
+    "filters": [
+      "bodas-ouro",
+      "ignez",
+      "celestino"
+    ]
+  },
+  {
+    "slug": "7f0b7de6-c1e",
+    "src": "./images/bodas-ouro/50_102miagq.jpg",
+    "alt": "Seis pessoas em trajes formais em um casamento: três homens em ternos escuros, duas mulheres em vestidos claros segurando buquês e um homem de camisa listrada e jeans, todos em pé dentro de casa.",
+    "filters": [
+      "bodas-ouro",
+      "ignez",
+      "ivani",
+      "celestino"
+    ]
+  },
+  {
+    "slug": "ed6d0ed8-8aa",
+    "src": "./images/bodas-ouro/20_a7nkv7j7.jpg",
+    "alt": "Três pessoas, dois homens e uma mulher, seguram um retrato emoldurado de um cavalo.",
+    "filters": [
+      "bodas-ouro",
+      "celestino"
+    ]
+  },
+  {
+    "slug": "af78b771-d8a",
+    "src": "./images/bodas-ouro/03_2sxbx15f.jpg",
+    "alt": "Uma mulher sorridente com óculos e cabelo ruivo está em primeiro plano, com um buquê de rosas cor de pêssego em suas mãos, enquanto outra mulher sorridente com cabelo loiro está desfocada ao fundo.",
+    "filters": [
+      "bodas-ouro"
+    ]
+  },
+  {
+    "slug": "d881a18a-867",
+    "src": "./images/bodas-ouro/28_q3kb1emj.jpg",
+    "alt": "Três mulheres sorridentes posam juntas ao ar livre em um jardim, a mulher do meio está grávida e tem as mãos sobre a barriga, enquanto as outras duas a abraçam.",
+    "filters": [
+      "bodas-ouro"
+    ]
+  },
+  {
+    "slug": "f3cea5c3-020",
+    "src": "./images/bodas-ouro/12_ghl2c1yo.jpg",
+    "alt": "Uma mulher em pé no centro cantando em um microfone no pódio, ladeada por dois homens e uma mulher sentada à direita.",
+    "filters": [
+      "bodas-ouro"
+    ]
+  },
+  {
+    "slug": "9bd09ec9-834",
+    "src": "./images/bodas-ouro/64_mymzvm18.jpg",
+    "alt": "Cinco indivíduos, quatro homens e uma mulher, em pé em uma calçada de asfalto perto de um prédio amarelo e folhagem verde.",
+    "filters": [
+      "bodas-ouro",
+      "ignez"
+    ]
+  },
+  {
+    "slug": "5738ac4e-d27",
+    "src": "./images/bodas-ouro/08_vtz8lqx1.jpg",
+    "alt": "Um casal de idosos sentados em frente a arranjos de flores; o homem à esquerda usa óculos e um terno com gravata, e a mulher à direita usa óculos e um vestido de renda branca enquanto segura um buquê e um rosário.",
+    "filters": [
+      "bodas-ouro"
+    ]
+  },
+  {
+    "slug": "0ed96f21-982",
+    "src": "./images/bodas-ouro/22_cgnoim56.jpg",
+    "alt": "Um homem idoso de óculos e terno escuro tenta equilibrar duas caixas de arquivo coloridas, uma azul e outra vermelha, com uma expressão de esforço.",
+    "filters": [
+      "bodas-ouro",
+      "celestino"
+    ]
+  },
+  {
+    "slug": "36a54fa5-fd2",
+    "src": "./images/bodas-ouro/06_bw3l6w2n.jpg",
+    "alt": "Pessoas em uma igreja aplaudindo, com a maioria delas olhando para frente.",
+    "filters": [
+      "bodas-ouro",
+      "idemar",
+      "gilberto",
+      "gilmar"
+    ]
+  },
+  {
+    "slug": "39fe1c44-c34",
+    "src": "./images/bodas-ouro/67_0nfncb4r.jpg",
+    "alt": "Um homem sorridente de terno listrado em azul e branco, com uma gravata vermelha listrada, está entre duas mulheres. A mulher da esquerda é uma senhora de óculos e cabelo ruivo encaracolado, vestindo uma blusa branca texturizada e segurando um rosário. A mulher da direita, com cabelo ruivo e um colar de pérolas, veste um vestido azul texturizado.",
+    "filters": [
+      "bodas-ouro",
+      "ivani",
+      "ignez",
+      "gilmar"
+    ]
+  },
+  {
+    "slug": "4ca67067-433",
+    "src": "./images/bodas-ouro/54_q9md8gu8.jpg",
+    "alt": "Seis adultos, três homens e três mulheres, estão em fila para uma foto, em um quarto com cortinas bege e uma parede clara com padrões dourados. A mulher do meio veste um vestido branco e segura um buquê de noiva. O homem ao seu lado veste um terno preto com uma camisa branca e gravata amarela. Os outros quatro estão em trajes formais.",
+    "filters": [
+      "bodas-ouro",
+      "idemar",
+      "gilmar",
+      "ignez",
+      "celestino",
+      "gilberto",
+      "ivani"
+    ]
+  },
+  {
+    "slug": "179fe866-efd",
+    "src": "./images/bodas-ouro/32_uds7qyok.jpg",
+    "alt": "Um grupo de dez pessoas, três homens, cinco mulheres e duas meninas, posa para uma foto de corpo inteiro em uma sala com cortinas bege.",
+    "filters": [
+      "bodas-ouro",
+      "ignez",
+      "celestino"
+    ]
+  },
+  {
+    "slug": "cfefb3cd-156",
+    "src": "./images/bodas-ouro/23_b04fdk5q.jpg",
+    "alt": "Dois homens sorridentes ao ar livre: um homem de terno segura uma caixa vermelha e se vira para o outro homem, que usa camisa social e está rindo com as mãos na frente do corpo.",
+    "filters": [
+      "bodas-ouro"
+    ]
+  },
+  {
+    "slug": "3c73d46a-3e0",
+    "src": "./images/bodas-ouro/18_pw33wgb2.jpg",
+    "alt": "Dois homens em um gramado, o da esquerda em um terno escuro com uma gravata dourada, sorrindo e segurando uma moldura dourada e uma caixa cinza, e o da direita em uma camisa azul-clara, com a boca aberta em uma risada.",
+    "filters": [
+      "bodas-ouro",
+      "celestino"
+    ]
+  },
+  {
+    "slug": "54e69fbe-065",
+    "src": "./images/bodas-ouro/58_pm4j98gx.jpg",
+    "alt": "Um homem de terno, uma mulher de vestido branco, uma menina de vestido branco segurando um buquê, um homem de terno e uma mulher de vestido estampado, todos posando juntos.",
+    "filters": [
+      "bodas-ouro",
+      "ignez",
+      "idemar",
+      "celestino"
+    ]
+  },
+  {
+    "slug": "173f9240-c0d",
+    "src": "./images/bodas-ouro/13_z6w2wgoz.jpg",
+    "alt": "Um casal mais velho está vestido para uma cerimônia de casamento. A mulher usa um vestido branco de renda e segura um buquê de rosas amarelas e flores brancas, enquanto o homem está de terno preto e gravata dourada, com o braço em volta dela.",
+    "filters": [
+      "bodas-ouro",
+      "ignez",
+      "celestino"
+    ]
+  },
+  {
+    "slug": "42cfa539-989",
+    "src": "./images/bodas-ouro/26_chmnuhoz.jpg",
+    "alt": "Um homem e uma mulher idosos sorriem enquanto posam em um gramado ao ar livre, segurando aventais com apliques, enquanto uma mulher jovem ao fundo os fotografa.",
+    "filters": [
+      "bodas-ouro",
+      "ignez",
+      "celestino"
+    ]
+  },
+  {
+    "slug": "41c00845-4a8",
+    "src": "./images/bodas-ouro/56_5ceiczeu.jpg",
+    "alt": "Menina sorridente segurando buquê de rosas amarelas entre um homem e uma mulher mais velhos, que sorriem gentilmente.",
+    "filters": [
+      "bodas-ouro",
+      "ignez",
+      "celestino"
+    ]
+  },
+  {
+    "slug": "56aa4be0-72d",
+    "src": "./images/bodas-ouro/36_p4sontnk.jpg",
+    "alt": "Sete adultos sorridentes, seis homens e uma mulher, posam juntos em frente a uma cortina decorada e um arranjo de flores, provavelmente em um casamento ou evento formal.",
+    "filters": [
+      "bodas-ouro",
+      "ignez",
+      "celestino"
+    ]
+  },
+  {
+    "slug": "e2b33eb7-4d0",
+    "src": "./images/bodas-ouro/02_3lk3nfvo.jpg",
+    "alt": "Duas meninas em vestidos brancos, de mãos dadas, em pé em um corredor, a mais velha à esquerda sorrindo para a câmera, a mais nova à direita com cabelos cacheados.",
+    "filters": [
+      "bodas-ouro"
+    ]
+  },
+  {
+    "slug": "2b984e7b-b2c",
+    "src": "./images/bodas-ouro/42_a3ramync.jpg",
+    "alt": "Sete pessoas, incluindo noivos com buquês, posam lado a lado em um evento formal, possivelmente um casamento.",
+    "filters": [
+      "bodas-ouro",
+      "celestino",
+      "ignez",
+      "ivani"
+    ]
+  },
+  {
+    "slug": "3c913457-d36",
+    "src": "./images/bodas-ouro/52_ce8s5o9q.jpg",
+    "alt": "Seis pessoas em trajes formais posam para uma foto em um evento.",
+    "filters": [
+      "bodas-ouro",
+      "celestino",
+      "ivani",
+      "ignez"
+    ]
+  },
+  {
+    "slug": "c4792442-14d",
+    "src": "./images/bodas-ouro/53_z3huf2pu.jpg",
+    "alt": "Um homem em um terno preto com uma camisa rosa e gravata escura, uma mulher em um vestido de noiva branco segurando um buquê de rosas amarelas, um homem mais velho em um terno preto com uma camisa branca e gravata amarela, e uma mulher em uma camisa branca com uma gola dourada e óculos em um evento formal.",
+    "filters": [
+      "bodas-ouro",
+      "celestino",
+      "ignez",
+      "gilberto"
+    ]
+  },
+  {
+    "slug": "dc2d15d5-ce8",
+    "src": "./images/bodas-ouro/55_4ck8gyu9.jpg",
+    "alt": "Quatro pessoas em roupas formais posam para uma foto em um casamento, com uma mulher de vestido branco no centro segurando um buquê e uma mulher de vestido preto à direita.",
+    "filters": [
+      "bodas-ouro",
+      "ignez",
+      "celestino",
+      "gilmar"
+    ]
+  },
+  {
+    "slug": "b9328483-ea6",
+    "src": "./images/bodas-ouro/71_nt7r9gmu.jpg",
+    "alt": "Um grupo de cinco pessoas está posando numa rua. Um homem e uma mulher, em primeiro plano, abraçam-se, a mulher segurando um buquê.",
+    "filters": [
+      "bodas-ouro",
+      "ignez",
+      "celestino"
+    ]
+  },
+  {
+    "slug": "d1172bc4-3d8",
+    "src": "./images/bodas-ouro/41_kbce4nj3.jpg",
+    "alt": "Três pessoas adultas em trajes de casamento posam na frente de uma parede com cortinas claras; a noiva no centro usa um vestido branco de renda e segura um buquê de rosas pêssego, ladeada por dois homens de terno e gravata.",
+    "filters": [
+      "bodas-ouro",
+      "ignez",
+      "celestino"
+    ]
+  },
+  {
+    "slug": "40da2e3c-aaa",
+    "src": "./images/bodas-ouro/05_uokiziv2.jpg",
+    "alt": "Um homem de terno e óculos segura um microfone e fala, com a cabeça baixa em oração, diante de uma estátua da Virgem Maria em uma parede branca.",
+    "filters": [
+      "bodas-ouro"
+    ]
+  },
+  {
+    "slug": "3b954af1-ab4",
+    "src": "./images/bodas-ouro/07_9o0m2eo7.jpg",
+    "alt": "Menina jovem com uma flor azul no cabelo, cantando em um microfone.",
+    "filters": [
+      "bodas-ouro"
+    ]
+  },
+  {
+    "slug": "a2ae3a77-7e8",
+    "src": "./images/bodas-ouro/44_p13opwf3.jpg",
+    "alt": "Seis adultos sorrindo, três homens e três mulheres, em trajes formais, posam para uma foto de grupo, com um buquê de flores amarelas sendo segurado por uma mulher de vestido branco, e outro buquê nas mãos da mulher de vestido azul.",
+    "filters": [
+      "bodas-ouro",
+      "ivani",
+      "ignez",
+      "celestino"
+    ]
+  },
+  {
+    "slug": "2224cca1-308",
+    "src": "./images/bodas-ouro/63_2vconi08.jpg",
+    "alt": "Um grupo de seis pessoas, incluindo uma jovem vestida de branco segurando um buquê, posa para uma foto em um evento formal, com as mãos de vários membros da família descansando uns sobre os outros em apoio.",
+    "filters": [
+      "bodas-ouro",
+      "ivani"
+    ]
+  },
+  {
+    "slug": "fb2652f6-204",
+    "src": "./images/bodas-ouro/33_lc07gqpk.jpg",
+    "alt": "Cinco pessoas vestidas formalmente, sorrindo e posando para uma foto de família em um fundo creme.",
+    "filters": [
+      "bodas-ouro",
+      "celestino",
+      "ivani",
+      "ignez"
+    ]
+  },
+  {
+    "slug": "c115c8ab-df4",
+    "src": "./images/bodas-ouro/21_97kzyzev.jpg",
+    "alt": "Três homens de meia-idade posam com um quadro de um cavalo no campo; o homem da esquerda sorri para o espectador, o homem do centro sorri para a frente, e o homem da direita tem um bigode e olha para a direita.",
+    "filters": [
+      "bodas-ouro",
+      "celestino"
+    ]
+  },
+  {
+    "slug": "6b6cb8c2-393",
+    "src": "./images/bodas-ouro/39_m2sx46ou.jpg",
+    "alt": "Sete pessoas, três homens e quatro mulheres, posam para uma foto em um casamento.",
+    "filters": [
+      "bodas-ouro",
+      "ivani",
+      "ignez"
+    ]
+  },
+  {
+    "slug": "4fa351d7-339",
+    "src": "./images/bodas-ouro/01_spgn9d17.jpg",
+    "alt": "Um casal mais velho está sorrindo para a câmera em uma celebração de casamento, com o homem vestindo um terno e a mulher um vestido branco de renda, segurando um buquê de flores.",
+    "filters": [
+      "bodas-ouro",
+      "celestino",
+      "ignez"
+    ]
+  },
+  {
+    "slug": "f7092317-582",
+    "src": "./images/bodas-ouro/40_pjbmflzf.jpg",
+    "alt": "Seis pessoas sorridentes em um casamento. A noiva está em um vestido branco e segura um buquê de flores amarelas. O noivo está de terno preto e gravata dourada. A mulher à esquerda da noiva está de vestido floral roxo, e o homem à esquerda dela está de camisa xadrez. A mulher à direita do noivo está de vestido azul, e o homem à direita dela está de terno preto.",
+    "filters": [
+      "bodas-ouro",
+      "ivani",
+      "celestino"
+    ]
+  },
+  {
+    "slug": "75f9d859-19f",
+    "src": "./images/bodas-ouro/11_zrwnt3os.jpg",
+    "alt": "Uma jovem com um vestido branco canta em um microfone no centro, enquanto quatro adultos a observam no palco.",
+    "filters": [
+      "bodas-ouro"
+    ]
+  },
+  {
+    "slug": "38f3ef47-c8b",
+    "src": "./images/bodas-ouro/10_6147kkiq.jpg",
+    "alt": "Um padre de meia-idade em vestes brancas olha e gesticula para uma mulher de meia-idade de óculos e vestido branco, que olha para ele com um sorriso.",
+    "filters": [
+      "bodas-ouro"
+    ]
+  },
+  {
+    "slug": "1775a7fc-021",
+    "src": "./images/bodas-ouro/69_f5q3dsjw.jpg",
+    "alt": "Homem de terno escuro sorrindo entre duas mulheres. A da esquerda usa um vestido vermelho e óculos, enquanto a da direita usa um vestido azul.",
+    "filters": [
+      "bodas-ouro",
+      "gilberto"
+    ]
+  },
+  {
+    "slug": "cf87910e-e91",
+    "src": "./images/bodas-ouro/31_2szaol6t.jpg",
+    "alt": "Duas mulheres sorridentes, uma de vestido branco e outra de vestido azul, seguram buquês e estão em primeiro plano. Atrás delas, um grupo de pessoas de diversas idades se diverte em um gramado.",
+    "filters": [
+      "bodas-ouro",
+      "ivani",
+      "ignez"
+    ]
+  },
+  {
+    "slug": "ecbf9e80-834",
+    "src": "./images/bodas-ouro/17_hj510zlq.jpg",
+    "alt": "Três adultos sorrindo ao ar livre em um evento: duas mulheres no centro, uma de vestido preto e outra de vestido branco com um buquê, e um homem de terno abrindo um presente à direita.",
+    "filters": [
+      "bodas-ouro",
+      "ivani",
+      "celestino"
+    ]
+  },
+  {
+    "slug": "c5c6f09e-41f",
+    "src": "./images/fragments/img02.png",
+    "alt": "this is a image 02",
+    "filters": [
+      "fragments",
+      "celestino"
+    ]
+  },
+  {
+    "slug": "28849ab4-d30",
     "src": "./images/fragments/img01.png",
     "alt": "this is a image 01",
     "filters": [
