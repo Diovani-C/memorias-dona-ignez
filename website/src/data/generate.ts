@@ -1,6 +1,5 @@
 import { readdir } from "node:fs/promises";
 import { join, parse } from "node:path";
-import { randomUUID } from "node:crypto";
 
 // --- CONFIGURATION ---
 // Adjust these paths to match your project structure
@@ -57,6 +56,8 @@ async function generateImageMetadata() {
   const finalOutput: OutputItem[] = [];
   const categories = await readdir(IMAGES_ROOT_DIR, { withFileTypes: true });
 
+  categories.sort();
+
   for (const category of categories) {
     // We only process subdirectories.
     if (!category.isDirectory()) continue;
@@ -69,6 +70,8 @@ async function generateImageMetadata() {
     const imageFiles = files.filter((file) =>
       /\.(jpe?g|png|webp)$/i.test(file),
     );
+
+    imageFiles.sort();
 
     for (const imageFilename of imageFiles) {
       const { name: baseName } = parse(imageFilename);
