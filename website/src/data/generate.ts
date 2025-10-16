@@ -56,7 +56,7 @@ async function generateImageMetadata() {
   const finalOutput: OutputItem[] = [];
   const categories = await readdir(IMAGES_ROOT_DIR, { withFileTypes: true });
 
-  categories.sort();
+  categories.sort((file1, file2) => file1.name.localeCompare(file2.name));
 
   for (const category of categories) {
     // We only process subdirectories.
