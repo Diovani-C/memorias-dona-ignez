@@ -70,6 +70,8 @@ export function createUpscaleImageTask(): TaskFunction {
       model: x4,
     });
 
+    inputFiles.sort((file1, file2) => file1.name.localeCompare(file2.name));
+
     console.log(`Found ${inputFiles.length} file(s) to upscale.`);
 
     for (let file of inputFiles) {

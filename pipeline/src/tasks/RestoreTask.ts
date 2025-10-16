@@ -15,6 +15,7 @@ import { createUserContent } from "@google/genai";
 import { join } from "path";
 import { Buffer } from "buffer";
 import { getGoogleAI, getInputFiles } from "./utils.ts";
+import Bottleneck from "bottleneck";
 
 // --- Configuration ---
 const RESTORE_TASK_PROMPT = `You are a photo restoration and enhancement specialist. Your task is to meticulously restore the provided old photograph to its highest possible quality, making it look as if it was captured recently with professional equipment, while preserving the original style, lighting, and atmosphere without adding new elements or changing the identity of the people.
@@ -43,11 +44,18 @@ export function createRestoreImageTask(): TaskFunction {
       throw new Error("No input files found to process.");
     }
 
+    // Limit the number of request per minute
+    const limiter = new Bottleneck({
+      maxConcurrent: 1,
+      minTime: 6_500,
+    });
+
+    inputFiles.sort((file1, file2) => file1.name.localeCompare(file2.name));
+
     console.log(`Found ${inputFiles.length} file(s) to process.`);
 
     for (let file of inputFiles) {
-      // Await every request response to not reach the API rate limit
-      await restoreImage(file, outputPath);
+      await limiter.schedule(() => restoreImage(file, outputPath));
     }
   };
 }
@@ -76,26 +84,29 @@ async function restoreImage(
 
   // Error handling for API response
   if (!response.candidates || response.candidates.length === 0) {
-    throw new Error(
+    console.error(
       `API returned no candidates for the restored image. ${response.data}`,
     );
+    return;
   }
 
   const imagePart = response.candidates?.[0]?.content?.parts?.find(
     (p) => p.inlineData,
   );
 
-  if (imagePart?.inlineData) {
-    const imageData = imagePart.inlineData.data;
-    const responseBuffer = Buffer.from(imageData, "base64");
-    const outputFilePath = join(outputPath, `restored_${file.name}`);
+  const imageData = imagePart?.inlineData?.data;
 
-    await Bun.write(outputFilePath, responseBuffer);
-  } else {
-    throw new Error(
+  if (!imageData) {
+    console.error(
       `Could not find image data in the API response. ${response.data}`,
     );
+    return;
   }
+
+  const responseBuffer = Buffer.from(imageData, "base64");
+  const outputFilePath = join(outputPath, file.name);
+
+  await Bun.write(outputFilePath, responseBuffer);
 }
 
 /**

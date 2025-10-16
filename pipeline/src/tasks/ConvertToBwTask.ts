@@ -18,7 +18,7 @@ async function convertToGrayscale(
 ): Promise<void> {
   try {
     const originalName = parse(file.name).name;
-    const outputFilePath = join(outputPath, `${originalName}_bw.png`);
+    const outputFilePath = join(outputPath, `${originalName}.png`);
 
     console.log(`   -> Converting ${file.name} to black and white...`);
 
@@ -43,6 +43,8 @@ export function createConvertToBwTask(): TaskFunction {
     console.log(
       `Found ${inputFiles.length} file(s) to convert to black and white.`,
     );
+
+    inputFiles.sort((file1, file2) => file1.name.localeCompare(file2.name));
 
     // Create an array of conversion promises to run them concurrently.
     const conversionPromises = inputFiles.map((file) =>

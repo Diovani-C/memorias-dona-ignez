@@ -10,6 +10,7 @@ import { createUserContent } from "@google/genai";
 import { join, parse } from "path";
 import { Buffer } from "buffer";
 import { getGoogleAI, getInputFiles } from "./utils.ts";
+import Bottleneck from "bottleneck";
 
 // --- Configuration ---
 const ALT_TEXT_PROMPT =
@@ -33,13 +34,20 @@ export function createGenerateAltTextTask(): TaskFunction {
       throw new Error("No input files found to process.");
     }
 
+    inputFiles.sort((file1, file2) => file1.name.localeCompare(file2.name));
+
+    // Limit the number of request per minute
+    const limiter = new Bottleneck({
+      maxConcurrent: 1,
+      minTime: 6_500,
+    });
+
     console.log(
       `Found ${inputFiles.length} file(s) to process for alt text generation.`,
     );
 
     for (let file of inputFiles) {
-      // Await every request response to not reach the API rate limit
-      await generateAltText(file, outputPath);
+      await limiter.schedule(() => generateAltText(file, outputPath));
     }
   };
 }

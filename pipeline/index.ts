@@ -87,19 +87,19 @@ async function main() {
 
   try {
     const createTask = taskRegistry[task];
-    if (createTask) {
-      const taskRunner = createTask();
-      await taskRunner({
-        inputPath: input,
-        outputPath: output,
-      });
-      console.log(`✅ Task '${task}' completed successfully!`);
-    } else {
-      // Handle tasks that are defined in options but not yet implemented
+    if (!createTask) {
       console.warn(
         `🚧 The '${task}' task is not yet implemented. Coming soon!`,
       );
+      return;
     }
+
+    const taskRunner = createTask();
+    await taskRunner({
+      inputPath: input,
+      outputPath: output,
+    });
+    console.log(`✅ Task '${task}' completed successfully!`);
   } catch (error) {
     console.error("\n❌ An error occurred during task execution:");
     if (error instanceof Error) {

@@ -12,10 +12,10 @@ import { getInputFiles } from "./utils.ts";
 
 // The maximum width or height for the output image.
 // Images larger than this will be shrunk, while smaller images will not be enlarged.
-const MAX_DIMENSION = 1920;
+const MAX_DIMENSION = 3840;
 
 // The quality setting for WebP (1-100). 80 is a great balance.
-const WEBP_QUALITY = 80;
+const WEBP_QUALITY = 90;
 
 /**
  * The core optimization function using Sharp.
@@ -35,6 +35,8 @@ async function optimizeImage(
     await sharp(file.data)
       // Auto-rotates the image based on EXIF data, then strips all metadata.
       .rotate()
+      // Add a very light blur to reduce image details and size
+      .blur(0.3)
       // Resize the image to fit within the max dimensions.
       .resize({
         width: MAX_DIMENSION,
@@ -45,7 +47,7 @@ async function optimizeImage(
       // Convert to WebP with specific quality settings.
       .webp({
         quality: WEBP_QUALITY,
-        effort: 4, // A good balance between compression speed and file size (0-6).
+        effort: 6,
       })
       // Save the processed image to the output file.
       .toFile(outputFilePath);

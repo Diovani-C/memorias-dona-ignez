@@ -5,7 +5,7 @@
 
 import { GoogleGenAI, type Content } from "@google/genai";
 import { resolve, join, basename } from "path";
-import { stat, appendFile, writeFile } from "fs/promises";
+import { stat } from "fs/promises";
 import type { FileDataType } from "../types";
 import Bun from "bun";
 import { readdir } from "node:fs/promises";
