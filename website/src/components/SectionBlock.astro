@@ -1,3 +1,15 @@
-  <section class="text-base md:text-lg space-y-8 leading-relaxed text-pretty">
+  <section class="section-block text-base md:text-lg space-y-6 leading-relaxed text-pretty">
     <slot/>
   </section>
+
+<style is:global>
+  .section-block h2 {
+    margin-top: 3rem;
+    margin-bottom: 2rem;
+    font-size: var(--text-3xl) /* 1.875rem = 30px */;
+    line-height: var(--tw-leading, var(--text-3xl--line-height) /* calc(2.25 / 1.875) ≈ 1.2 */);
+    --tw-font-weight: var(--font-weight-bold) /* 700 */;
+    font-weight: var(--font-weight-bold) /* 700 */;
+
+  }
+</style>
