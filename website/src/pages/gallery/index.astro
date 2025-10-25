@@ -17,7 +17,8 @@ const allFaces = await getCollection("faces")
                     <h3 class="font-bold text-lg mb-3 text-center">Filtrar por Álbum:</h3>
                     <div id="album-filters" class="flex flex-wrap justify-center gap-2">
                       {
-                        allCategories.map(({data, id}) => <button class=`filter-btn px-4 py-2 text-sm rounded-full transition-colors duration-200 ${id === 'all' ? 'active-filter' : 'bg-gray-200 hover:bg-gray-300'}` data-filter={id} data-type="album">{data.displayValue}</button>)
+                        allCategories.map(({data, id}) => 
+                          <button class=`filter-btn px-4 py-2 text-sm rounded-full transition-colors duration-200 bg-gray-200 hover:bg-gray-300` data-value={id} data-filter="album">{data.displayValue}</button>)
                       }
                     </div>
                 </div>
@@ -25,7 +26,8 @@ const allFaces = await getCollection("faces")
                     <h3 class="font-bold text-lg mb-3 text-center">Filtrar por Pessoa:</h3>
                     <div id="people-filters" class="flex flex-wrap justify-center gap-2">
                       {
-                        allFaces.map(({data, id}) => <button class=`filter-btn px-4 py-2 text-sm rounded-full transition-colors duration-200 ${id === 'all' ? 'active-filter' : 'bg-gray-200 hover:bg-gray-300'}` data-filter={id} data-type="person">{data.displayValue}</button>)
+                        allFaces.map(({data, id}) => 
+                          <button class=`filter-btn px-4 py-2 text-sm rounded-full transition-colors duration-200 bg-gray-200 hover:bg-gray-300` data-value={id} data-filter="person">{data.displayValue}</button>)
                       }
                     </div>
                 </div>
@@ -39,23 +41,44 @@ const allFaces = await getCollection("faces")
 </Layout>
 
 <script>
-  let currentAlbumFilter = 'all';
-  let currentPeopleFilter = 'all';
+  function updateActiveButton(activePerson: string, activeAlbum: string ) {
+    document.querySelectorAll('.filter-btn').forEach(button => {
+      if (button instanceof HTMLElement) {
+        const filter = button.dataset.filter
+        const value = button.dataset.value
+
+        if(!filter || !value ) throw "Filter or value not defined for the button " + button.innerText
+
+        button.classList.remove('active-filter')
+
+        if (filter === 'album') {
+          if (value === activeAlbum) button.classList.add('active-filter')
+        } else if (filter === 'person') {
+          if (value === activePerson) button.classList.add('active-filter')
+        }
+      }
+    })
+  }
 
   function applyFilters() {
-    if(currentAlbumFilter === 'all' && currentPeopleFilter === 'all') {
+    const params = new URLSearchParams(window.location.search);
+    const activePerson = params.get('person') || 'all';
+    const activeAlbum = params.get('album') || 'all';
+
+    updateActiveButton(activePerson, activeAlbum)
+
+    if(activePerson === 'all' && activeAlbum === 'all') {
       document.querySelectorAll('.gallery-item.hidden').forEach(photo => photo.classList.remove('hidden'));
       return;
     }
-
 
     document.querySelectorAll('.gallery-item').forEach((galleryItem) => {
       if (galleryItem instanceof HTMLElement) {
         const filters = galleryItem.dataset.filters
         if(!filters) return;
 
-        const albumMatch = currentAlbumFilter === 'all' || filters.includes(currentAlbumFilter);
-        const peopleMatch = currentPeopleFilter === 'all' || filters.includes(currentPeopleFilter);
+        const albumMatch = activeAlbum === 'all' || filters.includes(activeAlbum);
+        const peopleMatch = activePerson === 'all' || filters.includes(activePerson);
 
         if(albumMatch && peopleMatch) {
           galleryItem.classList.remove("hidden")
@@ -68,25 +91,37 @@ const allFaces = await getCollection("faces")
   }
 
   document.addEventListener("astro:page-load", () => {
+    const currentParams = new URLSearchParams(window.location.search);
+    applyFilters();
+
+
+    document.querySelectorAll('.gallery-item').forEach((galleryItem) => {
+      galleryItem.addEventListener('click', () => {
+        sessionStorage.setItem('galleryFilters', window.location.search);
+      })
+    })
+
     document.querySelectorAll('.filter-btn').forEach(button => {
       if (button instanceof HTMLElement) {
         const filter = button.dataset.filter
-        const type = button.dataset.type
+        const value = button.dataset.value
 
-        if(!filter || !type) throw "Filter or type not defined for the button " + button.innerText
+        if(!filter || !value ) throw "Filter or value not defined for the button " + button.innerText
 
         button.addEventListener('click', () => {
-            if (type === 'album') {
-                currentAlbumFilter = filter;
-            } else if (type === 'person') {
-                currentPeopleFilter = filter;
-            }
-            
-            document.querySelectorAll(`.filter-btn[data-type="${type}"]`).forEach(btn => btn.classList.remove('active-filter', 'bg-gray-200', 'hover:bg-gray-300'));
-            button.classList.add('active-filter');
-            document.querySelectorAll(`.filter-btn[data-type="${type}"]:not(.active-filter)`).forEach(btn => btn.classList.add('bg-gray-200', 'hover:bg-gray-300'));
+          if (value === 'all') {
+            currentParams.delete(filter); 
+          } else {
+            currentParams.set(filter, value); 
+          }
 
-            applyFilters();
+          const newQuery = currentParams.toString();
+          const newUrl = window.location.pathname + (newQuery ? `?${newQuery}` : '');
+    
+          // pushState(state, title, url)
+          history.pushState({}, '', newUrl);
+
+          applyFilters();
         });
       }
     });

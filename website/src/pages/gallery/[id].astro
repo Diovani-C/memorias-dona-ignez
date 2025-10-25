@@ -18,6 +18,7 @@ const pageTitle = `Visualizar: `;
 
 <Layout title={pageTitle}>
   <a
+    id="back-to-gallery-link"
     href="/gallery"
     class="inline-flex items-center gap-2 text-sm font-semibold transition-colors mb-8"
     style="color: var(--color-text);"
@@ -130,7 +131,7 @@ const pageTitle = `Visualizar: `;
   </style>
 
   <!-- Script para funcionalidade de compartilhar -->
-  <script define:vars={{ image }}>
+  <script is:inline define:vars={{ image }}>
     const shareButton = document.getElementById("share-btn");
 
     if (shareButton) {
@@ -160,4 +161,18 @@ const pageTitle = `Visualizar: `;
       });
     }
   </script>
+
 </Layout>
+<script>
+  document.addEventListener("astro:page-load", () => {
+    const backLink = document.getElementById('back-to-gallery-link');
+    if (!backLink) return
+
+    const savedFilters = sessionStorage.getItem('galleryFilters');
+    console.log(savedFilters)
+
+    if (savedFilters) {
+      backLink.href = '/gallery' + savedFilters;
+    }
+  })
+</script>
