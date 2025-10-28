@@ -90,7 +90,7 @@ async function generateImageMetadata() {
       // D. Check for a corresponding "raw" image.
       const rawPath = join(categoryPath, "raw", imageFilename);
       const raw = (await Bun.file(rawPath).exists())
-        ? `./${categoryName}/raw/${imageFilename}`
+        ? `./images/${categoryName}/raw/${imageFilename}`
         : undefined;
 
       // E. Build the filters array.

@@ -2,12 +2,14 @@
 import { Image } from 'astro:assets';
 import ErechimImage from '../data/images/fragments/erechim.jpg'
 import IgnezYoungImage from '../data/images/fragments/002_lwwsf0p5.jpg'
-import MarriageImage from '../data/images/fragments/004_51ka5x2v.jpg'
+import MarriageImage from '../data/images/fragments/001_qpclobd4.jpg'
 import ArmazenImage from '../data/images/fragments/083_4odhumuw.jpg'
 import BeltraoImage from '../data/images/fragments/030_zkhur8ln.jpg'
 import IgnezJardinImage from '../data/images/fragments/032_1hy94wp2.jpg'
 import Layout from '../layouts/Layout.astro'
 import SectionBlock from '../components/SectionBlock.astro'
+
+const imageClass = "rounded-lg shadow-lg scroll-animate w-auto mx-auto max-h-[38rem]"
 ---
 
 <Layout title="Memórias da dona Ignez">
@@ -27,7 +29,7 @@ import SectionBlock from '../components/SectionBlock.astro'
     <h2 class="scroll-animate">Os Primeiros Anos em Erechim</h2>
     <p class="scroll-animate">Nossa querida Ignes nasceu no dia 23 de dezembro de 1938, na cidade de Erechim, no Rio Grande do Sul. Sua infância foi marcada pela vida no interior, onde estudou em uma escola rural e cresceu em tempos mais simples, brincando com bonecas feitas de espiga de milho.</p>
 
-    <Image class="rounded-lg shadow-lg scroll-animate" src={ErechimImage} alt="Erechim, José Bonifácio em 1939, Avenida Maurício Cardoso" />
+    <Image class={imageClass} src={ErechimImage} alt="Erechim, José Bonifácio em 1939, Avenida Maurício Cardoso" />
 
     <p class="scroll-animate">A infância também moldou sua personalidade. Seus pais, quando precisavam sair para trabalhar, a deixavam em casa com água e pão. Talvez por isso, ela tenha se tornado uma pessoa mais caseira e reservada ao longo da vida. Mas ela também tinha seu lado travesso; uma vez, quando pequena, fugiu do cercado e comeu um queijo inteiro, o que a fez passar muito mal. Em outra ocasião, uma fuga resultou em uma queda que lhe deixou uma pequena cicatriz na testa, uma marca que contou parte de sua história.</p>
     <p class="scroll-animate">Jovem, Ignes sentiu um chamado diferente. Ela decidiu estudar para ser freira, dedicando-se a isso por dois anos, embora não tenha chegado a se formar. Seu destino, ao que parece, era outro.</p>
@@ -40,11 +42,11 @@ import SectionBlock from '../components/SectionBlock.astro'
     <p class="scroll-animate">Ignes encontrou sua primeira vocação no magistério. Por 15 anos, ela foi professora do primário em escolas do interior, lecionando com dedicação e carinho. E foi em sala de aula que o amor a encontrou de uma forma inusitada.</p>
     <p class="scroll-animate">Celestino, nosso avô, então com 18 anos, começou a cortejá-la. Ele pedia ao seu irmão mais novo, que era aluno de Ignes (na época com 22 anos), para entregar-lhe bilhetes. Ela, como uma boa moça, "se fazia de difícil", mas a persistência do jovem Celestino falou mais alto. Um dia, ela finalmente aceitou seu convite para ir a um baile.</p>
 
-    <Image class="rounded-lg shadow-lg scroll-animate" src={IgnezYoungImage} alt="Celestino e Ignez mais novos" />
+    <Image class={imageClass} src={IgnezYoungImage} alt="Celestino e Ignez mais novos" />
 
     <p class="scroll-animate">Aquele baile foi o começo de tudo. Um ano depois, eles começaram a namorar, e em 30 de janeiro de 1965, celebraram sua união, casando-se e iniciando uma parceria que duraria uma vida inteira.</p>
 
-    <Image class="mx-auto w-auto rounded-lg shadow-lg scroll-animate" src={MarriageImage} alt="Foto de casamento de Ignez e Celestino" />
+    <Image class={imageClass} src={MarriageImage} alt="Foto de casamento de Ignez e Celestino" />
 
   </SectionBlock>
 
@@ -54,7 +56,7 @@ import SectionBlock from '../components/SectionBlock.astro'
     <p class="scroll-animate">Depois desse período vivendo no interior, eles decidiram se mudar para a cidade de Erechim para empreender. Foi então que abriram o armazém, um negócio onde trabalharam juntos incansavelmente por cinco anos. Nessa época, Ignes deixou o magistério para se dedicar integralmente ao armazém e à criação dos filhos, que logo se tornaram quatro.</p>
     <p class="scroll-animate">Foi um período de muito trabalho, mas também de consolidação da família. Um detalhe curioso dessa época é o nome de dois de seus filhos: Gilberto e Gilmar, uma homenagem à dupla sertaneja que ela tanto gostava de ouvir.</p>
 
-    <Image class="mx-auto w-auto rounded-lg shadow-lg scroll-animate" src={ArmazenImage} alt="Foto de casamento de Ignez e Celestino" />
+    <Image class={imageClass} src={ArmazenImage} alt="Foto de casamento de Ignez e Celestino" />
 
   </SectionBlock>
 
@@ -62,7 +64,7 @@ import SectionBlock from '../components/SectionBlock.astro'
     <h2 class="scroll-animate">A Mudança para Francisco Beltrão</h2>
     <p class="scroll-animate">Buscando novos horizontes, a família deixou Erechim e se mudou para Francisco Beltrão. Após algumas mudanças iniciais, eles finalmente construíram seu lar definitivo, a casa onde moraram por mais de 47 anos e que se tornou o ponto de encontro da família.</p>
     <p class="scroll-animate">Nessa nova fase, Vô Celestino começou a trabalhar com eletrônica, e Vó Ignes dedicou-se ao lar e à família.</p>
-    <Image class="mx-auto w-auto rounded-lg shadow-lg scroll-animate" src={BeltraoImage} alt="Foto de casamento de Ignez e Celestino" />
+    <Image class={imageClass} src={BeltraoImage} alt="Foto de casamento de Ignez e Celestino" />
   </SectionBlock>
 
   <SectionBlock>
@@ -78,7 +80,7 @@ import SectionBlock from '../components/SectionBlock.astro'
     <p class="scroll-animate">A convivência com o Vô Celestino era cheia de carinho e das "implicâncias" típicas de um casal com tanta história. Ela sempre pegava no pé dele quando ele tentava ajudar, mas acabava cometendo um errinho: fosse por colocar fogo demais no fogão a lenha, ou por dirigir rápido demais, sem enxergar as lombadas.</p>
     <p class="scroll-animate">Foi assim que nasceu uma das frases mais famosas da família, um bordão que sempre traz um sorriso ao rosto de quem ouve: "Olha a lombada, Celestino!"</p>
 
-    <Image class="mx-auto w-auto rounded-lg shadow-lg scroll-animate" src={IgnezJardinImage} alt="Dona Ignez rindo no jardin frente de casa" />
+    <Image class={imageClass} src={IgnezJardinImage} alt="Dona Ignez rindo no jardin frente de casa" />
   </SectionBlock>
 
   <SectionBlock>

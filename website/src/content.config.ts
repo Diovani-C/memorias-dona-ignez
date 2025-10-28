@@ -12,7 +12,7 @@ const images = defineCollection({
       slug: z.string(),
       src: image(),
       alt: z.string(),
-      raw: z.string().optional(),
+      raw: image().optional(),
       filters: z.array(z.string()),
     }),
 });

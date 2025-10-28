@@ -1,23 +1,66 @@
 ---
 import "../styles/global.css";
 import { ClientRouter } from "astro:transitions";
-const { title, description } = Astro.props;
+const { pathname } = Astro.url;
+
+interface Props {
+  title: string,
+  description: string,
+  imageUrl: string
+}
+
+const { title, description, imageUrl } = Astro.props;
+
+
+const navLinks = [
+  { href: "/", text: "Início" },
+  { href: "/gallery", text: "Galeria" },
+  { href: "/about", text: "Sobre" },
+];
+
+// Base classes for all links
+const baseLinkClasses = "hover:text-gray-900 hover:underline";
+
+// Classes to apply ONLY to the active link
+// Feel free to change this! e.g., "font-bold text-blue-600"
+const activeLinkClasses = "text-gray-900 underline font-semibold";
+
+/**
+ * Helper function to determine if a link is "active".
+ * This handles nested pages (e.g., /gallery/my-photo will keep /gallery active).
+ * It also ensures the homepage "/" is only active when it's an exact match.
+ */
+function isActive(linkHref: string) {
+  // Handle the homepage link
+  if (linkHref === "/") {
+    return pathname === "/";
+  }
+  // Handle other links
+  return pathname.startsWith(linkHref);
+}
 ---
 
 <html lang="pt-BR" class="scroll-smooth">
   <head>
     <meta charset="utf-8" />
-    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png" />
+    <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png" />
+    <link rel="manifest" href="/site.webmanifest" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta name="generator" content={Astro.generator} />
+    <link rel="sitemap" href="/sitemap-index.xml" />
 
     <title>{title}</title>
-    <meta name="description" content={description}>
-    <meta property="og:title" content={title}>
-    <meta property="og:description" content={description}>
-    <meta property="og:image" content="https://www.yourwebsite.com/images/photo-restoration-example.jpg">
-    <meta property="og:url" content="https://www.yourwebsite.com/services/photo-restoration">
-    <meta property="og:type" content="website">
+    <meta name="description" content={description} />
+
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:image" content={imageUrl} />
+    <meta property="og:url" content="https://memoriasdonaignez.com" />
+    <meta property="og:locale" content="pt_BR" />
+    <meta property="og:site_name" content="Memorias Dona Ignez" />
+    <meta property="og:type" content="website" />
 
     <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -64,30 +107,28 @@ const { title, description } = Astro.props;
           Ignez
         </h1>
         <nav>
-          <ul class="flex space-x-4 md:space-x-8 text-sm md:text-base">
-            <li>
-              <a
-                href="/"
-                class="hover:text-gray-900 hover:underline"
-                data-astro-prefetch="load">Início</a
-              >
-            </li>
-            <li>
-              <a
-                href="/gallery"
-                class="hover:text-gray-900 hover:underline"
-                data-astro-prefetch="load">Galeria</a
-              >
-            </li>
-            <li>
-              <a
-                href="/about"
-                class="hover:text-gray-900 hover:underline"
-                data-astro-prefetch>Sobre</a
-              >
-            </li>
-          </ul>
-        </nav>
+  <ul class="flex space-x-4 md:space-x-8 text-sm md:text-base">
+    {
+      /* Loop through each navigation link */
+      navLinks.map((link) => (
+        <li>
+          <a
+            href={link.href}
+            class:list={[
+              baseLinkClasses,
+              // This is the magic:
+              // It adds `activeLinkClasses` *only if* isActive(link.href) is true
+              { [activeLinkClasses]: isActive(link.href) },
+            ]}
+            data-astro-prefetch
+          >
+            {link.text}
+          </a>
+        </li>
+      ))
+    }
+  </ul>
+</nav>
       </div>
     </header>
     <main class="p-4 md:p-6 max-w-5xl mx-auto min-h-[85dvh]">
@@ -98,12 +139,12 @@ const { title, description } = Astro.props;
       style="border-color: var(--color-sepia-light);"
     >
       <p class="text-sm mb-2" style="color: var(--color-text);">
-        Este memorial foi criado com amor por seu neto, Diovani Eduardo
-        Coelli, em homenagem à sua vida, sua história e para que suas memórias
-        nunca se percam.
+        Este memorial foi criado com amor por seu neto, Diovani Eduardo Coelli,
+        em homenagem à sua vida, sua história e para que suas memórias nunca se
+        percam.
       </p>
       <a
-        href="https://github.com/diovanicoelli"
+        href="https://github.com/Diovani-C/memorias-dona-ignez"
         target="_blank"
         rel="noopener noreferrer"
         class="text-sm hover:underline"
