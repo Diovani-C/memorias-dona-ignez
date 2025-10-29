@@ -1,28 +1,35 @@
 ---
-import Layout from "../../layouts/Layout.astro";
-import { Image } from "astro:assets";
-import { getCollection } from "astro:content";
+  import Layout from "../../layouts/Layout.astro";
+  import { Image } from "astro:assets";
+  import { getCollection } from "astro:content";
 
-export async function getStaticPaths() {
-  const posts = await getCollection("images");
-  return posts.map((image) => ({
-    params: { id: image.id },
-    props: { image },
-  }));
-}
+  export async function getStaticPaths() {
+    const posts = await getCollection("images");
+    return posts.map((image) => ({
+      params: { id: image.id },
+      props: { image },
+    }));
+  }
 
-const { image } = Astro.props;
+  const { image } = Astro.props;
 
-const pageTitle = `Visualizar: `;
+  const isPortrait = image.data.src.height > image.data.src.width
+
+  const imageClass = `object-contain min-w-0 rounded-lg bg-gray-200 ${isPortrait ? "h-[80dvh] max-w-fit" : ""}`
 ---
 
-<Layout title={pageTitle}>
+<Layout
+  title={`Visualizar: ${image.data.alt}`}
+  description={image.data.alt}
+  image={image.data.src}
+>
   <a
     id="back-to-gallery-link"
     href="/gallery"
     class="inline-flex items-center gap-2 text-sm font-semibold transition-colors mb-8"
     style="color: var(--color-text);"
     aria-label="Voltar para a galeria"
+    data-image-id={image.data.slug}
     data-astro-prefetch
   >
     <svg
@@ -44,15 +51,15 @@ const pageTitle = `Visualizar: `;
   </a>
 
   <div
-    transition:name={image.id}
-    class="max-w-fit p-2 sm:p-4 bg-white rounded-xl drop-shadow-lg mx-auto"
+    class="max-w-4xl w-fit p-2 sm:p-4 bg-white rounded-xl drop-shadow-lg mx-auto"
     style="border: 1px solid var(--color-sepia-light);"
   >
     <Image
       id="final-image"
       src={image.data.src}
       alt={image.data.alt}
-      class="object-contain w-full max-h-[80dvh] min-w-0 rounded-lg"
+      fetchpriority="high"
+      class={imageClass}
     />
 
     {
@@ -61,7 +68,7 @@ const pageTitle = `Visualizar: `;
           id="raw-image"
           src={image.data.raw}
           alt={image.data.alt + " (Original)"}
-          class="object-contain w-full max-h-[80dvh] min-w-0 rounded-lg"
+          class={imageClass}
           style="display: none;"
         />
       )
@@ -238,12 +245,12 @@ const pageTitle = `Visualizar: `;
     }
 
     if (!backLink) return;
-
+    const imageId = backLink.dataset.imageId
     const savedFilters = sessionStorage.getItem("galleryFilters");
-    console.log(savedFilters);
 
-    if (savedFilters) {
-      backLink.href = "/gallery" + savedFilters;
+    if (backLink instanceof HTMLAnchorElement) {
+      backLink.href = `/gallery${savedFilters}#${imageId}`;
     }
+
   });
 </script>

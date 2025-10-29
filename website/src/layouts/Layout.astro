@@ -2,15 +2,15 @@
 import "../styles/global.css";
 import { ClientRouter } from "astro:transitions";
 const { pathname } = Astro.url;
+import { fade } from "astro:transitions";
 
 interface Props {
-  title: string,
-  description: string,
-  imageUrl: string
+  title: string;
+  description: string;
+  image: ImageMetadata;
 }
 
-const { title, description, imageUrl } = Astro.props;
-
+const { title, description, image } = Astro.props;
 
 const navLinks = [
   { href: "/", text: "Início" },
@@ -21,15 +21,8 @@ const navLinks = [
 // Base classes for all links
 const baseLinkClasses = "hover:text-gray-900 hover:underline";
 
-// Classes to apply ONLY to the active link
-// Feel free to change this! e.g., "font-bold text-blue-600"
 const activeLinkClasses = "text-gray-900 underline font-semibold";
 
-/**
- * Helper function to determine if a link is "active".
- * This handles nested pages (e.g., /gallery/my-photo will keep /gallery active).
- * It also ensures the homepage "/" is only active when it's an exact match.
- */
 function isActive(linkHref: string) {
   // Handle the homepage link
   if (linkHref === "/") {
@@ -40,7 +33,7 @@ function isActive(linkHref: string) {
 }
 ---
 
-<html lang="pt-BR" class="scroll-smooth">
+<html lang="pt-BR" class="scroll-smooth scroll-pt-20" transition:name="root" transition:animate="none">
   <head>
     <meta charset="utf-8" />
     <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
@@ -50,17 +43,46 @@ function isActive(linkHref: string) {
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta name="generator" content={Astro.generator} />
     <link rel="sitemap" href="/sitemap-index.xml" />
+    <link rel="canonical" href={Astro.url.href} />
 
     <title>{title}</title>
     <meta name="description" content={description} />
 
     <meta property="og:title" content={title} />
     <meta property="og:description" content={description} />
-    <meta property="og:image" content={imageUrl} />
-    <meta property="og:url" content="https://memoriasdonaignez.com" />
+    <meta property="og:image" content={image.src} />
+
+    <meta property="og:image:alt" content={description} />
+    <meta property="og:image:width" content={image.width.toString()} />
+    <meta property="og:image:height" content={image.height.toString()} />
+
+    <meta property="og:url" content={Astro.url.href} />
     <meta property="og:locale" content="pt_BR" />
     <meta property="og:site_name" content="Memorias Dona Ignez" />
     <meta property="og:type" content="website" />
+
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content={title} />
+    <meta name="twitter:description" content={description} />
+    <meta name="twitter:image" content={image.src} />
+    <meta name="twitter:image:alt" content={description} />
+
+    <script is:inline type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "ImageGallery",
+        "name": "Memorias Dona Ignez",
+        "description": "Uma homenagem carinhosa à vida e ao legado da minha amada avó, um espaço para manter sua história sempre viva.",
+        "url": "https://memoriasdonaignez.com",
+
+        "about": {
+          "@type": "Person",
+          "name": "Ignez Dariva",
+          "birthDate": "1938-06-29",
+          "deathDate": "2025-09-29"
+        }
+      }
+    </script>
 
     <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -95,6 +117,10 @@ function isActive(linkHref: string) {
       .font-title {
         font-family: var(--font-title);
       }
+
+      @view-transition {
+        navigation: auto; /* enabled! */
+      }
     </style>
   </head>
   <body class="antialiased">
@@ -107,31 +133,31 @@ function isActive(linkHref: string) {
           Ignez
         </h1>
         <nav>
-  <ul class="flex space-x-4 md:space-x-8 text-sm md:text-base">
-    {
-      /* Loop through each navigation link */
-      navLinks.map((link) => (
-        <li>
-          <a
-            href={link.href}
-            class:list={[
-              baseLinkClasses,
-              // This is the magic:
-              // It adds `activeLinkClasses` *only if* isActive(link.href) is true
-              { [activeLinkClasses]: isActive(link.href) },
-            ]}
-            data-astro-prefetch
-          >
-            {link.text}
-          </a>
-        </li>
-      ))
-    }
-  </ul>
-</nav>
+          <ul class="flex space-x-4 md:space-x-8 text-sm md:text-base">
+            {
+              /* Loop through each navigation link */
+              navLinks.map((link) => (
+                <li>
+                  <a
+                    href={link.href}
+                    class:list={[
+                      baseLinkClasses,
+                      // This is the magic:
+                      // It adds `activeLinkClasses` *only if* isActive(link.href) is true
+                      { [activeLinkClasses]: isActive(link.href) },
+                    ]}
+                    data-astro-prefetch
+                  >
+                    {link.text}
+                  </a>
+                </li>
+              ))
+            }
+          </ul>
+        </nav>
       </div>
     </header>
-    <main class="p-4 md:p-6 max-w-5xl mx-auto min-h-[85dvh]">
+    <main class="p-4 md:p-6 max-w-5xl mx-auto min-h-[85dvh]" transition:animate={fade({ duration: "0.8s" })}>
       <slot />
     </main>
     <footer

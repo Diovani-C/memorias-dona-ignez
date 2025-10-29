@@ -1,121 +1,282 @@
 ---
-import { Image } from 'astro:assets';
-import ErechimImage from '../data/images/fragments/erechim.jpg'
-import IgnezYoungImage from '../data/images/fragments/002_lwwsf0p5.jpg'
-import MarriageImage from '../data/images/fragments/001_qpclobd4.jpg'
-import ArmazenImage from '../data/images/fragments/083_4odhumuw.jpg'
-import BeltraoImage from '../data/images/fragments/030_zkhur8ln.jpg'
-import IgnezJardinImage from '../data/images/fragments/032_1hy94wp2.jpg'
-import Layout from '../layouts/Layout.astro'
-import SectionBlock from '../components/SectionBlock.astro'
+import { Image } from "astro:assets";
+import ErechimImage from "../data/images/fragments/erechim.jpg";
+import IgnezYoungImage from "../data/images/fragments/002_lwwsf0p5.jpg";
+import MarriageImage from "../data/images/fragments/001_qpclobd4.jpg";
+import ArmazenImage from "../data/images/fragments/083_4odhumuw.jpg";
+import BeltraoImage from "../data/images/fragments/030_zkhur8ln.jpg";
+import IgnezJardinImage from "../data/images/fragments/032_1hy94wp2.jpg";
+import Layout from "../layouts/Layout.astro";
+import SectionBlock from "../components/SectionBlock.astro";
 
-const imageClass = "rounded-lg shadow-lg scroll-animate w-auto mx-auto max-h-[38rem]"
+const imageClass =
+  "rounded-lg shadow-lg scroll-animate w-auto mx-auto max-h-[38rem]";
 ---
 
-<Layout title="Memórias da dona Ignez">
-  <section class="text-center">
-    <h2 class="text-4xl md:text-6xl font-bold font-title mb-4 scroll-animate">Memórias da dona Ignez</h2>
-    <p class="max-w-3xl mx-auto text-lg md:text-xl mb-12 scroll-animate">Um arquivo de amor e saudade, celebrando uma vida extraordinária através de momentos eternizados.</p>
-
-    <div class="mx-auto mb-16 scroll-animate">
-      <video class="w-full aspect-square rounded-lg mask-[url(brush-mask.svg)] mask-center mask-contain mask-no-repeat" autoplay loop muted playsinline>
-        <source src="video01.mp4" type="video/mp4">
+<Layout
+  title="Memórias da dona Ignez"
+  description="Uma homenagem carinhosa à vida e ao legado da minha amada avó, um espaço para manter sua história sempre viva."
+  image={IgnezYoungImage}
+>
+  <section
+    class="relative min-h-screen flex items-center justify-center overflow-hidden"
+  >
+    <div class="absolute inset-0 z-0">
+      <video
+        class="w-full h-full object-cover opacity-40"
+        autoplay
+        loop
+        muted
+        playsinline
+      >
+        <source src="video01.mp4" type="video/mp4" />
         Seu navegador não suporta vídeos.
       </video>
+      <div class="absolute inset-0 bg-gradient-to-b from-black/40 to-black/70">
+      </div>
+    </div>
+
+    <div class="relative z-10 text-center max-w-5xl mx-auto px-4 py-16">
+      <h2
+        class="text-5xl md:text-7xl font-bold font-title mb-6 scroll-animate text-white"
+      >
+        Memórias da dona Ignez
+      </h2>
+      <p
+        class="max-w-3xl mx-auto text-xl md:text-2xl mb-12 scroll-animate text-white/90"
+      >
+        Um arquivo de amor e saudade, celebrando uma vida extraordinária através
+        de momentos eternizados.
+      </p>
+      <a href="#inicio" class="inline-block scroll-animate">
+        <svg
+          class="w-12 h-12 text-white/80 animate-bounce"
+          fill="none"
+          stroke="currentColor"
+          viewBox="0 0 24 24"
+        >
+          <path
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            stroke-width="2"
+            d="M19 14l-7 7m0 0l-7-7m7 7V3"></path>
+        </svg>
+      </a>
     </div>
   </section>
 
   <SectionBlock>
-    <h2 class="scroll-animate">Os Primeiros Anos em Erechim</h2>
-    <p class="scroll-animate">Nossa querida Ignes nasceu no dia 23 de dezembro de 1938, na cidade de Erechim, no Rio Grande do Sul. Sua infância foi marcada pela vida no interior, onde estudou em uma escola rural e cresceu em tempos mais simples, brincando com bonecas feitas de espiga de milho.</p>
+    <h2 id="inicio" class="scroll-animate">Os Primeiros Anos em Erechim</h2>
+    <p class="scroll-animate">
+      Nossa querida ignez nasceu no dia 23 de dezembro de 1938, na cidade de
+      Erechim, no Rio Grande do Sul. Sua infância foi marcada pela vida no
+      interior, onde estudou em uma escola rural e cresceu em tempos mais
+      simples, brincando com bonecas feitas de espiga de milho.
+    </p>
 
-    <Image class={imageClass} src={ErechimImage} alt="Erechim, José Bonifácio em 1939, Avenida Maurício Cardoso" />
+    <Image
+      class={imageClass}
+      src={ErechimImage}
+      alt="Erechim, José Bonifácio em 1939, Avenida Maurício Cardoso"
+    />
 
-    <p class="scroll-animate">A infância também moldou sua personalidade. Seus pais, quando precisavam sair para trabalhar, a deixavam em casa com água e pão. Talvez por isso, ela tenha se tornado uma pessoa mais caseira e reservada ao longo da vida. Mas ela também tinha seu lado travesso; uma vez, quando pequena, fugiu do cercado e comeu um queijo inteiro, o que a fez passar muito mal. Em outra ocasião, uma fuga resultou em uma queda que lhe deixou uma pequena cicatriz na testa, uma marca que contou parte de sua história.</p>
-    <p class="scroll-animate">Jovem, Ignes sentiu um chamado diferente. Ela decidiu estudar para ser freira, dedicando-se a isso por dois anos, embora não tenha chegado a se formar. Seu destino, ao que parece, era outro.</p>
-
+    <p class="scroll-animate">
+      A infância também moldou sua personalidade. Seus pais, quando precisavam
+      sair para trabalhar, a deixavam em casa com água e pão. Talvez por isso,
+      ela tenha se tornado uma pessoa mais caseira e reservada ao longo da vida.
+      Mas ela também tinha seu lado travesso; uma vez, quando pequena, fugiu do
+      cercado e comeu um queijo inteiro, o que a fez passar muito mal. Em outra
+      ocasião, uma fuga resultou em uma queda que lhe deixou uma pequena
+      cicatriz na testa, uma marca que contou parte de sua história.
+    </p>
+    <p class="scroll-animate">
+      Jovem, ignez sentiu um chamado diferente. Ela decidiu estudar para ser
+      freira, dedicando-se a isso por dois anos, embora não tenha chegado a se
+      formar. Seu destino, ao que parece, era outro.
+    </p>
   </SectionBlock>
 
   <SectionBlock>
-
     <h2 class="scroll-animate">A Professora e o Amor</h2>
-    <p class="scroll-animate">Ignes encontrou sua primeira vocação no magistério. Por 15 anos, ela foi professora do primário em escolas do interior, lecionando com dedicação e carinho. E foi em sala de aula que o amor a encontrou de uma forma inusitada.</p>
-    <p class="scroll-animate">Celestino, nosso avô, então com 18 anos, começou a cortejá-la. Ele pedia ao seu irmão mais novo, que era aluno de Ignes (na época com 22 anos), para entregar-lhe bilhetes. Ela, como uma boa moça, "se fazia de difícil", mas a persistência do jovem Celestino falou mais alto. Um dia, ela finalmente aceitou seu convite para ir a um baile.</p>
+    <p class="scroll-animate">
+      ignez encontrou sua primeira vocação no magistério. Por 15 anos, ela foi
+      professora do primário em escolas do interior, lecionando com dedicação e
+      carinho. E foi em sala de aula que o amor a encontrou de uma forma
+      inusitada.
+    </p>
+    <p class="scroll-animate">
+      Celestino, nosso avô, então com 18 anos, começou a cortejá-la. Ele pedia
+      ao seu irmão mais novo, que era aluno de ignez (na época com 22 anos),
+      para entregar-lhe bilhetes. Ela, como uma boa moça, "se fazia de difícil",
+      mas a persistência do jovem Celestino falou mais alto. Um dia, ela
+      finalmente aceitou seu convite para ir a um baile.
+    </p>
 
-    <Image class={imageClass} src={IgnezYoungImage} alt="Celestino e Ignez mais novos" />
+    <Image
+      class={imageClass}
+      src={IgnezYoungImage}
+      alt="Celestino e Ignez mais novos"
+    />
 
-    <p class="scroll-animate">Aquele baile foi o começo de tudo. Um ano depois, eles começaram a namorar, e em 30 de janeiro de 1965, celebraram sua união, casando-se e iniciando uma parceria que duraria uma vida inteira.</p>
+    <p class="scroll-animate">
+      Aquele baile foi o começo de tudo. Um ano depois, eles começaram a
+      namorar, e em 30 de janeiro de 1965, celebraram sua união, casando-se e
+      iniciando uma parceria que duraria uma vida inteira.
+    </p>
 
-    <Image class={imageClass} src={MarriageImage} alt="Foto de casamento de Ignez e Celestino" />
-
+    <Image
+      class={imageClass}
+      src={MarriageImage}
+      alt="Foto de casamento de Ignez e Celestino"
+    />
   </SectionBlock>
 
   <SectionBlock>
     <h2 class="scroll-animate">A Família e o Armazém</h2>
-    <p class="scroll-animate">Após o casamento, Celestino levou Ignes para morar junto com seus pais, no interior. Foi lá, na casa dos sogros, que o casal começou a construir sua família e onde nasceram seus três primeiros filhos.</p>
-    <p class="scroll-animate">Depois desse período vivendo no interior, eles decidiram se mudar para a cidade de Erechim para empreender. Foi então que abriram o armazém, um negócio onde trabalharam juntos incansavelmente por cinco anos. Nessa época, Ignes deixou o magistério para se dedicar integralmente ao armazém e à criação dos filhos, que logo se tornaram quatro.</p>
-    <p class="scroll-animate">Foi um período de muito trabalho, mas também de consolidação da família. Um detalhe curioso dessa época é o nome de dois de seus filhos: Gilberto e Gilmar, uma homenagem à dupla sertaneja que ela tanto gostava de ouvir.</p>
+    <p class="scroll-animate">
+      Após o casamento, Celestino levou ignez para morar junto com seus pais, no
+      interior. Foi lá, na casa dos sogros, que o casal começou a construir sua
+      família e onde nasceram seus três primeiros filhos.
+    </p>
+    <p class="scroll-animate">
+      Depois desse período vivendo no interior, eles decidiram se mudar para a
+      cidade de Erechim para empreender. Foi então que abriram o armazém, um
+      negócio onde trabalharam juntos incansavelmente por cinco anos. Nessa
+      época, ignez deixou o magistério para se dedicar integralmente ao armazém
+      e à criação dos filhos, que logo se tornaram quatro.
+    </p>
+    <p class="scroll-animate">
+      Foi um período de muito trabalho, mas também de consolidação da família.
+      Um detalhe curioso dessa época é o nome de dois de seus filhos: Gilberto e
+      Gilmar, uma homenagem à dupla sertaneja que ela tanto gostava de ouvir.
+    </p>
 
-    <Image class={imageClass} src={ArmazenImage} alt="Foto de casamento de Ignez e Celestino" />
-
+    <Image
+      class={imageClass}
+      src={ArmazenImage}
+      alt="Foto de casamento de Ignez e Celestino"
+    />
   </SectionBlock>
 
   <SectionBlock>
     <h2 class="scroll-animate">A Mudança para Francisco Beltrão</h2>
-    <p class="scroll-animate">Buscando novos horizontes, a família deixou Erechim e se mudou para Francisco Beltrão. Após algumas mudanças iniciais, eles finalmente construíram seu lar definitivo, a casa onde moraram por mais de 47 anos e que se tornou o ponto de encontro da família.</p>
-    <p class="scroll-animate">Nessa nova fase, Vô Celestino começou a trabalhar com eletrônica, e Vó Ignes dedicou-se ao lar e à família.</p>
-    <Image class={imageClass} src={BeltraoImage} alt="Foto de casamento de Ignez e Celestino" />
+    <p class="scroll-animate">
+      Buscando novos horizontes, a família deixou Erechim e se mudou para
+      Francisco Beltrão. Após algumas mudanças iniciais, eles finalmente
+      construíram seu lar definitivo, a casa onde moraram por mais de 47 anos e
+      que se tornou o ponto de encontro da família.
+    </p>
+    <p class="scroll-animate">
+      Nessa nova fase, Vô Celestino começou a trabalhar com eletrônica, e Vó
+      ignez dedicou-se ao lar e à família.
+    </p>
+    <Image
+      class={imageClass}
+      src={BeltraoImage}
+      alt="Foto de casamento de Ignez e Celestino"
+    />
   </SectionBlock>
 
   <SectionBlock>
     <h2 class="scroll-animate">Seus Gostos e Seus Dias</h2>
-    <p class="scroll-animate">Vó Ignes era uma mulher de fé, muito religiosa, e tinha um grande amor pela leitura e pela escrita. Estava sempre informada, lendo jornais, revistas católicas e assistindo ao noticiário na televisão.</p>
-    <p class="scroll-animate">Uma de suas paixões era manter seu diário. Por anos, ela registrou ali os acontecimentos do dia ou da semana, criando um arquivo de memórias inestimável. (Um dia, esperamos digitalizar esse acervo e trazê-lo para cá).</p>
-    <p class="scroll-animate">Apesar de não gostar muito de sair de casa ou de dançar, ela fez diversas viagens com a família, conhecendo lugares como Brasília, Belo Horizonte, visitando parentes em Erechim e no Rio Grande do Sul, e participando do encontro da família Balestrin em Santa Catarina.</p>
-    <p class="scroll-animate">Em casa, ela tinha suas marcas registradas. A carne de porco era uma de suas comidas favoritas. E, claro, sua lendária caipirinha! Com mais de 40 anos de prática, ela criou uma receita que, até hoje, ninguém da família consegue replicar com a mesma exatidão.</p>
+    <p class="scroll-animate">
+      Vó ignez era uma mulher de fé, muito religiosa, e tinha um grande amor
+      pela leitura e pela escrita. Estava sempre informada, lendo jornais,
+      revistas católicas e assistindo ao noticiário na televisão.
+    </p>
+    <p class="scroll-animate">
+      Uma de suas paixões era manter seu diário. Por anos, ela registrou ali os
+      acontecimentos do dia ou da semana, criando um arquivo de memórias
+      inestimável. (Um dia, esperamos digitalizar esse acervo e trazê-lo para
+      cá).
+    </p>
+    <p class="scroll-animate">
+      Apesar de não gostar muito de sair de casa ou de dançar, ela fez diversas
+      viagens com a família, conhecendo lugares como Brasília, Belo Horizonte,
+      visitando parentes em Erechim e no Rio Grande do Sul, e participando do
+      encontro da família Balestrin em Santa Catarina.
+    </p>
+    <p class="scroll-animate">
+      Em casa, ela tinha suas marcas registradas. A carne de porco era uma de
+      suas comidas favoritas. E, claro, sua lendária caipirinha! Com mais de 40
+      anos de prática, ela criou uma receita que, até hoje, ninguém da família
+      consegue replicar com a mesma exatidão.
+    </p>
   </SectionBlock>
 
   <SectionBlock>
     <h2 class="scroll-animate">"Olha a lombada, Celestino!"</h2>
-    <p class="scroll-animate">A convivência com o Vô Celestino era cheia de carinho e das "implicâncias" típicas de um casal com tanta história. Ela sempre pegava no pé dele quando ele tentava ajudar, mas acabava cometendo um errinho: fosse por colocar fogo demais no fogão a lenha, ou por dirigir rápido demais, sem enxergar as lombadas.</p>
-    <p class="scroll-animate">Foi assim que nasceu uma das frases mais famosas da família, um bordão que sempre traz um sorriso ao rosto de quem ouve: "Olha a lombada, Celestino!"</p>
+    <p class="scroll-animate">
+      A convivência com o Vô Celestino era cheia de carinho e das "implicâncias"
+      típicas de um casal com tanta história. Ela sempre pegava no pé dele
+      quando ele tentava ajudar, mas acabava cometendo um errinho: fosse por
+      colocar fogo demais no fogão a lenha, ou por dirigir rápido demais, sem
+      enxergar as lombadas.
+    </p>
+    <p class="scroll-animate">
+      Foi assim que nasceu uma das frases mais famosas da família, um bordão que
+      sempre traz um sorriso ao rosto de quem ouve: "Olha a lombada, Celestino!"
+    </p>
 
-    <Image class={imageClass} src={IgnezJardinImage} alt="Dona Ignez rindo no jardin frente de casa" />
+    <Image
+      class={imageClass}
+      src={IgnezJardinImage}
+      alt="Dona Ignez rindo no jardin frente de casa"
+    />
   </SectionBlock>
 
   <SectionBlock>
     <h2 class="scroll-animate">O Legado</h2>
-    <p class="scroll-animate">Ignes nos deixou aos 86 anos, após uma vida plena e cheia de histórias. Ela foi professora, esposa, mãe, avó e a matriarca que, mesmo com seu jeito reservado, unia a todos. Deixou filhos, netos e uma coleção de memórias que vão desde suas brincadeiras de infância até sua famosa caipirinha e seu cuidado com o Vô Celestino.</p>
+    <p class="scroll-animate">
+      Ignez nos deixou aos 86 anos, após uma vida plena e cheia de histórias.
+      Ela foi professora, esposa, mãe, avó e a matriarca que, mesmo com seu
+      jeito reservado, unia a todos. Deixou filhos, netos e uma coleção de
+      memórias que vão desde suas brincadeiras de infância até sua famosa
+      caipirinha e seu cuidado com o Vô Celestino.
+    </p>
     <p class="scroll-animate">Sua história continua viva em cada um de nós.</p>
 
     <div class="mt-16 text-center scroll-animate">
-      <a href="/gallery" data-astro-prefetch class="inline-block bg-gold-pale text-white font-bold py-3 px-8 rounded-full transition-transform duration-300 hover:scale-105" style="background-color: var(--color-gold-pale);">Ver a Galeria Completa</a>
+      <a
+        href="/gallery"
+        data-astro-prefetch
+        class="inline-block bg-gold-pale text-white font-bold py-3 px-8 rounded-full transition-transform duration-300 hover:scale-105"
+        style="background-color: var(--color-gold-pale);"
+        >Ver a Galeria Completa</a
+      >
     </div>
   </SectionBlock>
 </Layout>
 
 <style>
   .scroll-animate {
-      opacity: 0;
-      transform: translateY(30px);
-      transition: opacity 0.8s ease-out, transform 0.8s ease-out;
+    opacity: 0;
+    transform: translateY(30px);
+    transition:
+      opacity 0.8s ease-out,
+      transform 0.8s ease-out;
   }
   .scroll-animate.is-visible {
-      opacity: 1;
-      transform: translateY(0);
+    opacity: 1;
+    transform: translateY(0);
   }
 </style>
 
-<script>
-  const observer = new IntersectionObserver((entries) => {
-      entries.forEach(entry => {
+<script is:inline>
+  const observer = new IntersectionObserver(
+    (entries) => {
+      entries.forEach((entry) => {
         if (entry.isIntersecting) {
-            entry.target.classList.add('is-visible');
+          entry.target.classList.add("is-visible");
         }
       });
-  }, { threshold: 0.1 });
+    },
+    { threshold: 0.1 }
+  );
 
   document.addEventListener("astro:page-load", () => {
-    document.querySelectorAll('.scroll-animate').forEach(el => observer.observe(el));
-  })
+    document
+      .querySelectorAll(".scroll-animate")
+      .forEach((el) => observer.observe(el));
+  });
 </script>
