@@ -17,7 +17,7 @@ const allFaces = await getCollection("faces")
               <div id="album-filters" class="flex flex-wrap justify-center gap-2">
                 {
                   allCategories.map(({data, id}) => 
-                    <button class=`filter-btn px-4 py-2 text-sm rounded-full transition-colors duration-200 bg-gray-200 hover:bg-gray-300` data-value={id} data-filter="album">{data.displayValue}</button>)
+                    <button class=`filter-btn px-4 py-2 text-sm rounded-full transition-colors duration-200 bg-gray-200 hover:bg-gray-300 hover:cursor-pointer` data-value={id} data-filter="album">{data.displayValue}</button>)
                 }
               </div>
           </div>
@@ -26,7 +26,7 @@ const allFaces = await getCollection("faces")
               <div id="people-filters" class="flex flex-wrap justify-center gap-2">
                 {
                   allFaces.map(({data, id}) => 
-                    <button class=`filter-btn px-4 py-2 text-sm rounded-full transition-colors duration-200 bg-gray-200 hover:bg-gray-300` data-value={id} data-filter="person">{data.displayValue}</button>)
+                    <button class=`filter-btn px-4 py-2 text-sm rounded-full transition-colors duration-200 bg-gray-200 hover:bg-gray-300 hover:cursor-pointer` data-value={id} data-filter="person">{data.displayValue}</button>)
                 }
               </div>
           </div>
@@ -34,9 +34,32 @@ const allFaces = await getCollection("faces")
 
       <!-- Gallery Grid -->
       <div class="columns-1 sm:columns-2 md:columns-3 lg:columns-4 xl:columns-5 gap-4 space-y-4">
-        {allImages.map((image) => <GalleryPhoto imageData={image} className='gallery-item'/>)}
+        {allImages.map((image) => <GalleryPhoto imageData={image} className='gallery-item break-inside-avoid'/>)}
       </div>
   </section>
+  <button
+    id="scrollTopBtn"
+    class="scroll-top-btn rounded-full z-20 left-1/2 bg-(--color-gold-pale) fixed bottom-4 -translate-x-1/2 translate-y-4 origin-center inline-flex items-center justify-center w-12 h-12 text-white drop-shadow-md opacity-0 border transition-all ease-in-out duration-500 hover:cursor-pointer hover:drop-shadow-xl md:left-auto md:right-5 md:bottom-5 md:translate-x-0 md:w-14 md:h-14"
+    aria-label="Voltar ao topo"
+    aria-hidden="true"
+    title="Voltar ao topo"
+  >
+    <svg
+      xmlns="http://www.w3.org/2000/svg"
+      fill="none"
+      viewBox="0 0 24 24"
+      stroke-width="2.5"
+      stroke="currentColor"
+      class="w-5 h-5"
+      aria-hidden="true"
+    >
+      <path
+        stroke-linecap="round"
+        stroke-linejoin="round"
+        d="M12 19.5v-15m0 0l-6.75 6.75M12 4.5l6.75 6.75"
+      />
+    </svg>
+  </button>
 </Layout>
 
 <script>
@@ -64,7 +87,7 @@ const allFaces = await getCollection("faces")
     const activePerson = params.get('person') || 'all';
     const activeAlbum = params.get('album') || 'all';
 
-    updateActiveButton(activePerson, activeAlbum)
+    updateActiveButton(activePerson, activeAlbum);
 
     if(activePerson === 'all' && activeAlbum === 'all') {
       document.querySelectorAll('.gallery-item.hidden').forEach(photo => photo.classList.remove('hidden'));
@@ -73,51 +96,94 @@ const allFaces = await getCollection("faces")
 
     document.querySelectorAll('.gallery-item').forEach((galleryItem) => {
       if (galleryItem instanceof HTMLElement) {
-        const filters = galleryItem.dataset.filters
+        const filters = galleryItem.dataset.filters;
         if(!filters) return;
 
         const albumMatch = activeAlbum === 'all' || filters.includes(activeAlbum);
         const peopleMatch = activePerson === 'all' || filters.includes(activePerson);
 
         if(albumMatch && peopleMatch) {
-          galleryItem.classList.remove("hidden")
-          return
+          galleryItem.classList.remove("hidden");
+          return;
         }
 
-        galleryItem.classList.add('hidden')
+        galleryItem.classList.add('hidden');
       }
-    })
+    });
   }
 
   document.addEventListener("astro:page-load", () => {
     const currentParams = new URLSearchParams(window.location.search);
     applyFilters();
 
+    // Get the button
+    const scrollTopBtn = document.getElementById("scrollTopBtn");
+    if (scrollTopBtn) {
+      const SHOW_OFFSET = 200;
+      let ticking = false;
+
+      const hiddenButtonClasses = ["opacity-0", "pointer-events-none", "translate-y-4"]
+      const visisbleButtonClasses = ["opacity-100", "pointer-events-auto", "translate-y-0"]
+
+      const updateVisibility = () => {
+        const scrolled = window.scrollY || window.pageYOffset;
+        if (scrolled > SHOW_OFFSET) {
+          scrollTopBtn.classList.remove(...hiddenButtonClasses);
+          scrollTopBtn.classList.add(...visisbleButtonClasses);
+          scrollTopBtn.setAttribute('aria-hidden', 'false');
+        } else {
+          scrollTopBtn.classList.remove(...visisbleButtonClasses);
+          scrollTopBtn.classList.add(...hiddenButtonClasses);
+          scrollTopBtn.setAttribute('aria-hidden', 'true');
+        }
+        ticking = false;
+      };
+
+      window.addEventListener('scroll', () => {
+        if (!ticking) {
+          window.requestAnimationFrame(updateVisibility);
+          ticking = true;
+        }
+      }, { passive: true });
+
+      scrollTopBtn.addEventListener('click', () => {
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+      });
+
+      // keyboard accessibility
+      scrollTopBtn.addEventListener('keydown', (e) => {
+        if (e.key === 'Enter' || e.key === ' ') {
+          e.preventDefault();
+          scrollTopBtn.click();
+        }
+      });
+
+      // update initial state
+      updateVisibility();
+    }
 
     document.querySelectorAll('.gallery-item').forEach((galleryItem) => {
       galleryItem.addEventListener('click', () => {
         sessionStorage.setItem('galleryFilters', window.location.search);
-      })
-    })
+      });
+    });
 
     document.querySelectorAll('.filter-btn').forEach(button => {
       if (button instanceof HTMLElement) {
-        const filter = button.dataset.filter
-        const value = button.dataset.value
+        const filter = button.dataset.filter;
+        const value = button.dataset.value;
 
-        if(!filter || !value ) throw "Filter or value not defined for the button " + button.innerText
+        if(!filter || !value ) throw "Filter or value not defined for the button " + button.innerText;
 
         button.addEventListener('click', () => {
           if (value === 'all') {
-            currentParams.delete(filter); 
+            currentParams.delete(filter);
           } else {
-            currentParams.set(filter, value); 
+            currentParams.set(filter, value);
           }
 
           const newQuery = currentParams.toString();
           const newUrl = window.location.pathname + (newQuery ? `?${newQuery}` : '');
-    
-          // pushState(state, title, url)
           history.pushState({}, '', newUrl);
 
           applyFilters();
@@ -129,11 +195,7 @@ const allFaces = await getCollection("faces")
 
 <style>
   .active-filter {
-      background-color: var(--color-gold-pale);
-      color: white;
-  }
-  /* Custom style to prevent images from breaking inside a column */
-  :global(.gallery-item) {
-      break-inside: avoid;
+    background-color: var(--color-gold-pale);
+    color: white;
   }
 </style>

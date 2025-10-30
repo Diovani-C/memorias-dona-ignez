@@ -10,7 +10,7 @@ interface Props {
 const { imageData, className } = Astro.props;
 ---
 
-<div id={imageData.data.slug} class=`bg-gray-200 overflow-hidden rounded-lg drop-shadow-md hover:drop-shadow-xl/25 transition-all duration-300 ease-in-out hover:scale-105 ${className}` data-filters={imageData.data.filters.join("-")} >
+<div id={imageData.data.slug} class=`bg-gray-200 overflow-hidden rounded-lg drop-shadow-md hover:drop-shadow-xl/25 ${className}` data-filters={imageData.data.filters.join("-")} >
   <a href={`/gallery/${imageData.id}`} data-astro-prefetch>
     <Image class='w-full h-auto transition-all duration-300 ease-in-out hover:scale-105' src={imageData.data.src} alt={imageData.data.alt} />
   </a>
