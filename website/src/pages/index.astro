@@ -238,7 +238,7 @@ const imageClass =
 
     <div class="mt-16 text-center scroll-animate">
       <a
-        href="/gallery"
+        href="/gallery/"
         data-astro-prefetch
         class="inline-block bg-gold-pale text-white font-bold py-3 px-8 rounded-full transition-transform duration-300 hover:scale-105"
         style="background-color: var(--color-gold-pale);"
@@ -274,9 +274,7 @@ const imageClass =
     { threshold: 0.1 }
   );
 
-  document.addEventListener("astro:page-load", () => {
-    document
-      .querySelectorAll(".scroll-animate")
-      .forEach((el) => observer.observe(el));
-  });
+  document
+    .querySelectorAll(".scroll-animate")
+    .forEach((el) => observer.observe(el));
 </script>

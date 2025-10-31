@@ -1,6 +1,5 @@
 ---
 import "../styles/global.css";
-import { ClientRouter } from "astro:transitions";
 const { pathname } = Astro.url;
 import { fade } from "astro:transitions";
 
@@ -14,8 +13,8 @@ const { title, description, image } = Astro.props;
 
 const navLinks = [
   { href: "/", text: "Início" },
-  { href: "/gallery", text: "Galeria" },
-  { href: "/about", text: "Sobre" },
+  { href: "/gallery/", text: "Galeria" },
+  { href: "/about/", text: "Sobre" },
 ];
 
 // Base classes for all links
@@ -91,9 +90,6 @@ function isActive(linkHref: string) {
       href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Montserrat:wght@300;400;600&display=swap"
       rel="stylesheet"
     />
-
-    <ClientRouter />
-
     <style is:global>
       /* Configurações de fontes e cores personalizadas */
       :root {
@@ -119,7 +115,7 @@ function isActive(linkHref: string) {
       }
 
       @view-transition {
-        navigation: auto; /* enabled! */
+        navigation: auto;
       }
     </style>
   </head>

@@ -89,11 +89,11 @@
   },
   {
     "img": "023_9trqtnv6.webp",
-    "faces": ["gilmar", "idemar", "gilberto", "celestino", "ivani"]
+    "faces": ["gilberto", "idemar", "ignez", "ivani", "gilmar", "celestino"]
   },
   {
     "img": "024_nwkj0829.webp",
-    "faces": ["idemar", "gilberto", "ignez", "celestino"]
+    "faces": ["gilberto", "idemar", "ignez", "ivani", "gilmar", "celestino"]
   },
   {
     "img": "025_ngdtwhuk.webp",
@@ -121,7 +121,7 @@
   },
   {
     "img": "031_5h11nieh.webp",
-    "faces": ["celestino"]
+    "faces": ["celestino", "ignez"]
   },
   {
     "img": "032_7cdc0pj5.webp",
@@ -141,7 +141,7 @@
   },
   {
     "img": "036_fpgkye3g.webp",
-    "faces": ["ignez", "celestino", "ignez"]
+    "faces": ["ignez", "celestino"]
   },
   {
     "img": "037_deyt0bt2.webp",
@@ -209,15 +209,15 @@
   },
   {
     "img": "053_hcbkkq34.webp",
-    "faces": ["ignez", "ignez", "celestino"]
+    "faces": ["ignez", "celestino"]
   },
   {
     "img": "054_x8ra0syh.webp",
-    "faces": ["ignez"]
+    "faces": ["ignez", "celestino"]
   },
   {
     "img": "055_bxdwx0q9.webp",
-    "faces": ["ignez"]
+    "faces": ["ignez", "celestino"]
   },
   {
     "img": "056_iibmdeei.webp",
@@ -257,23 +257,27 @@
   },
   {
     "img": "065_ozl79641.webp",
-    "faces": ["celestino", "celestino"]
+    "faces": ["celestino"]
   },
   {
     "img": "066_gfhca84x.webp",
-    "faces": ["ivani", "ignez", "celestino"]
+    "faces": ["celestino", "ignez", "ivani", "idemar", "gilmar", "gilberto"]
   },
   {
     "img": "067_xj0gjtq9.webp",
-    "faces": ["ignez", "idemar", "celestino", "ignez"]
+    "faces": ["celestino", "ignez", "ivani", "idemar", "gilmar", "gilberto"]
   },
   {
     "img": "068_6esa6ow1.webp",
-    "faces": ["ignez", "idemar", "celestino"]
+    "faces": ["celestino", "ignez", "ivani", "idemar", "gilmar", "gilberto"]
   },
   {
     "img": "069_flnm7izd.webp",
     "faces": ["celestino"]
+  },
+  {
+    "img": "072_0rv4kgpd.webp",
+    "faces": ["idemar"]
   },
   {
     "img": "073_xv9oy6kz.webp",
@@ -321,7 +325,7 @@
   },
   {
     "img": "084_rux7neg8.webp",
-    "faces": ["idemar", "celestino"]
+    "faces": ["idemar"]
   },
   {
     "img": "085_9jyzyn8b.webp",
@@ -346,6 +350,10 @@
   {
     "img": "090_rjjt0iv5.webp",
     "faces": ["ignez"]
+  },
+  {
+    "img": "091_40loprg5.webp",
+    "faces": ["celestino"]
   },
   {
     "img": "092_yyrz12rm.webp",
@@ -377,19 +385,11 @@
   },
   {
     "img": "099_mpxcs4p2.webp",
-    "faces": ["gilmar", "idemar", "ignez", "ivani"]
+    "faces": ["gilmar", "idemar", "ignez", "ivani", "celestino", "gilberto"]
   },
   {
     "img": "100_qmtbcr4w.webp",
-    "faces": [
-      "gilmar",
-      "ivani",
-      "ignez",
-      "idemar",
-      "gilberto",
-      "celestino",
-      "ivani"
-    ]
+    "faces": ["gilmar", "idemar", "ignez", "ivani", "celestino", "gilberto"]
   },
   {
     "img": "101_ggssobii.webp",
@@ -408,4 +408,3 @@
     "faces": ["gilberto", "celestino", "ignez"]
   }
 ]
-

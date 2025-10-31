@@ -13,7 +13,7 @@
   },
   {
     "img": "04_ezex5pil.jpg",
-    "faces": ["idemar", "celestino", "ignez", "ivani"]
+    "faces": ["ignez", "celestino", "idemar", "gilmar", "ivani"]
   },
   {
     "img": "05_49cs582f.jpg",
@@ -25,15 +25,15 @@
   },
   {
     "img": "07_efvan9y2.jpg",
-    "faces": ["ignez", "ignez", "celestino"]
+    "faces": ["ignez", "celestino"]
   },
   {
     "img": "08_0sto5fhn.jpg",
-    "faces": ["ignez", "ignez", "celestino"]
+    "faces": ["ignez", "celestino"]
   },
   {
     "img": "09_egnx4dbv.jpg",
-    "faces": ["ignez", "celestino", "ignez"]
+    "faces": ["ignez", "celestino"]
   },
   {
     "img": "10_k4hfrz3g.jpg",
@@ -64,4 +64,3 @@
     "faces": ["ignez", "celestino", "gilmar"]
   }
 ]
-

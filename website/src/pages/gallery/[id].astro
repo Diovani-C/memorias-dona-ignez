@@ -23,7 +23,7 @@
 >
   <a
     id="back-to-gallery-link"
-    href="/gallery"
+    href="/gallery/"
     class="inline-flex items-center gap-2 text-sm font-semibold transition-colors mb-8"
     style="color: var(--color-text);"
     aria-label="Voltar para a galeria"
@@ -212,43 +212,41 @@
   </script>
 </Layout>
 <script>
-  document.addEventListener("astro:page-load", () => {
-    const toggleButton = document.getElementById("toggle-raw-btn");
-    const finalImage = document.getElementById("final-image");
-    const rawImage = document.getElementById("raw-image");
-    const backLink = document.getElementById("back-to-gallery-link");
+  const toggleButton = document.getElementById("toggle-raw-btn");
+  const finalImage = document.getElementById("final-image");
+  const rawImage = document.getElementById("raw-image");
+  const backLink = document.getElementById("back-to-gallery-link");
 
-    // Verifica se todos os elementos necessários existem
-    if (toggleButton && finalImage && rawImage) {
-      let isShowingRaw = false;
+  // Verifica se todos os elementos necessários existem
+  if (toggleButton && finalImage && rawImage) {
+    let isShowingRaw = false;
 
-      toggleButton.addEventListener("click", () => {
-        isShowingRaw = !isShowingRaw;
-        const span = toggleButton.querySelector("span");
+    toggleButton.addEventListener("click", () => {
+      isShowingRaw = !isShowingRaw;
+      const span = toggleButton.querySelector("span");
 
-        if (isShowingRaw) {
-          // Mostra a imagem raw
-          finalImage.style.display = "none";
-          rawImage.style.display = "block";
-          if (span) span.textContent = "Restaurada";
-          toggleButton.setAttribute("aria-label", "Mostrar imagem restaurada");
-        } else {
-          // Mostra a imagem final
-          finalImage.style.display = "block";
-          rawImage.style.display = "none";
-          if (span) span.textContent = "Original";
-          toggleButton.setAttribute("aria-label", "Mostrar imagem original");
-        }
-      });
-    }
+      if (isShowingRaw) {
+        finalImage.style.display = "none";
+        rawImage.style.display = "block";
+        if (span) span.textContent = "Restaurada";
+        toggleButton.setAttribute("aria-label", "Mostrar imagem restaurada");
+      } else {
+        finalImage.style.display = "block";
+        rawImage.style.display = "none";
+        if (span) span.textContent = "Original";
+        toggleButton.setAttribute("aria-label", "Mostrar imagem original");
+      }
+    });
+  }
 
-    if (!backLink) return;
-    const imageId = backLink.dataset.imageId
-    const savedFilters = sessionStorage.getItem("galleryFilters");
+  if (!backLink) throw "Back Link button not found";
+  const imageId = backLink.dataset.imageId
 
-    if (backLink instanceof HTMLAnchorElement) {
-      backLink.href = `/gallery${savedFilters}#${imageId}`;
-    }
+  sessionStorage.setItem("imageScrollId", imageId || "")
 
-  });
+  const savedFilters = sessionStorage.getItem("galleryFilters");
+
+  if (backLink instanceof HTMLAnchorElement) {
+    if (savedFilters) backLink.href = `/gallery/${savedFilters}`;
+  }
 </script>

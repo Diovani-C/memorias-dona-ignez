@@ -1,7 +1,7 @@
 ---
 import { getCollection } from 'astro:content';
 import Layout from '../../layouts/Layout.astro'
-import GalleryPhoto from '../../components/GalleryPhoto.astro';
+import { Image } from 'astro:assets';
 
 const allImages = await getCollection("images");
 const allCategories = await getCollection("categories")
@@ -10,36 +10,40 @@ const allFaces = await getCollection("faces")
 
 <Layout title="Galeria de Memórias" description="Explore a coleção de fotos restauradas e preservadas em homenagem à Dona Ignez." image={allImages[0].data.src}>
   <section >
-      <h2 class="text-4xl font-title text-center mb-8">Galeria de Memórias</h2>
-      <div class="mb-10">
-          <div class="mb-6">
-              <h3 class="font-bold text-lg mb-3 text-center">Filtrar por Álbum:</h3>
-              <div id="album-filters" class="flex flex-wrap justify-center gap-2">
-                {
-                  allCategories.map(({data, id}) => 
-                    <button class=`filter-btn px-4 py-2 text-sm rounded-full transition-colors duration-200 bg-gray-200 hover:bg-gray-300 hover:cursor-pointer` data-value={id} data-filter="album">{data.displayValue}</button>)
-                }
-              </div>
-          </div>
-          <div>
-              <h3 class="font-bold text-lg mb-3 text-center">Filtrar por Pessoa:</h3>
-              <div id="people-filters" class="flex flex-wrap justify-center gap-2">
-                {
-                  allFaces.map(({data, id}) => 
-                    <button class=`filter-btn px-4 py-2 text-sm rounded-full transition-colors duration-200 bg-gray-200 hover:bg-gray-300 hover:cursor-pointer` data-value={id} data-filter="person">{data.displayValue}</button>)
-                }
-              </div>
-          </div>
+    <h2 class="text-4xl font-title text-center mb-8">Galeria de Memórias</h2>
+    <div class="mb-10">
+      <div class="mb-6">
+        <h3 class="font-bold text-lg mb-3 text-center">Filtrar por Álbum:</h3>
+        <div id="album-filters" class="flex flex-wrap justify-center gap-2">
+          {allCategories.map(({data, id}) => 
+            <button class=`filter-btn px-4 py-2 text-sm rounded-full transition-colors duration-200 bg-gray-200 hover:bg-gray-300 hover:cursor-pointer` data-value={id} data-filter="album">{data.displayValue}</button>
+          )}
+        </div>
       </div>
+      <div>
+        <h3 class="font-bold text-lg mb-3 text-center">Filtrar por Pessoa:</h3>
+        <div id="people-filters" class="flex flex-wrap justify-center gap-2">
+          {allFaces.map(({data, id}) => 
+            <button class=`filter-btn px-4 py-2 text-sm rounded-full transition-colors duration-200 bg-gray-200 hover:bg-gray-300 hover:cursor-pointer` data-value={id} data-filter="person">{data.displayValue}</button>
+          )}
+        </div>
+      </div>
+    </div>
 
-      <!-- Gallery Grid -->
-      <div class="columns-1 sm:columns-2 md:columns-3 lg:columns-4 xl:columns-5 gap-4 space-y-4">
-        {allImages.map((image) => <GalleryPhoto imageData={image} className='gallery-item break-inside-avoid'/>)}
-      </div>
+    <!-- Gallery Grid -->
+    <div class="columns-1 sm:columns-2 md:columns-3 lg:columns-4 xl:columns-5 gap-4 space-y-4">
+      {allImages.map((image) => 
+        <div id={image.data.slug} class=`bg-gray-200 overflow-hidden rounded-lg drop-shadow-md hover:drop-shadow-xl/25 gallery-item break-inside-avoid` data-filters={image.data.filters.join("-")} >
+          <a href={`/gallery/${image.id}/`} data-astro-prefetch>
+            <Image class='w-full h-auto transition-all duration-300 ease-in-out hover:scale-105' src={image.data.src} alt={image.data.alt} />
+          </a>
+        </div>
+      )}
+    </div>
   </section>
   <button
     id="scrollTopBtn"
-    class="scroll-top-btn rounded-full z-20 left-1/2 bg-(--color-gold-pale) fixed bottom-4 -translate-x-1/2 translate-y-4 origin-center inline-flex items-center justify-center w-12 h-12 text-white drop-shadow-md opacity-0 border transition-all ease-in-out duration-500 hover:cursor-pointer hover:drop-shadow-xl md:left-auto md:right-5 md:bottom-5 md:translate-x-0 md:w-14 md:h-14"
+    class="scroll-top-btn rounded-full z-20 left-1/2 bg-(--color-gold-pale) fixed bottom-5 -translate-x-1/2 translate-y-4 origin-center inline-flex items-center justify-center w-12 h-12 text-white drop-shadow-md opacity-0 border transition-all ease-in-out duration-500 hover:cursor-pointer hover:drop-shadow-xl md:left-auto md:right-5 md:bottom-5 md:translate-x-0 md:w-14 md:h-14"
     aria-label="Voltar ao topo"
     aria-hidden="true"
     title="Voltar ao topo"
@@ -63,6 +67,95 @@ const allFaces = await getCollection("faces")
 </Layout>
 
 <script>
+  const currentParams = new URLSearchParams(window.location.search);
+  applyFilters();
+  scrollToImage();
+
+  document.querySelectorAll('.gallery-item').forEach((galleryItem) => {
+    galleryItem.addEventListener('click', () => {
+      sessionStorage.setItem('galleryFilters', window.location.search);
+    });
+  });
+
+  document.querySelectorAll('.filter-btn').forEach(button => {
+    if (button instanceof HTMLElement) {
+      const filter = button.dataset.filter;
+      const value = button.dataset.value;
+
+      if(!filter || !value ) throw "Filter or value not defined for the button " + button.innerText;
+
+      button.addEventListener('click', () => {
+        if (value === 'all') {
+          currentParams.delete(filter);
+        } else {
+          currentParams.set(filter, value);
+        }
+
+        const newQuery = currentParams.toString();
+        const newUrl = window.location.pathname + (newQuery ? `?${newQuery}` : '');
+        history.pushState({}, '', newUrl);
+
+        applyFilters();
+      });
+    }
+  });
+
+  const scrollTopBtn = document.getElementById("scrollTopBtn");
+  if (scrollTopBtn) {
+    const SHOW_OFFSET = 200;
+    let ticking = false;
+
+    const hiddenButtonClasses = ["opacity-0", "pointer-events-none", "translate-y-4"]
+    const visisbleButtonClasses = ["opacity-100", "pointer-events-auto", "translate-y-0"]
+
+    const updateVisibility = () => {
+      const scrolled = window.scrollY || window.pageYOffset;
+      if (scrolled > SHOW_OFFSET) {
+        scrollTopBtn.classList.remove(...hiddenButtonClasses);
+        scrollTopBtn.classList.add(...visisbleButtonClasses);
+        scrollTopBtn.setAttribute('aria-hidden', 'false');
+      } else {
+        scrollTopBtn.classList.remove(...visisbleButtonClasses);
+        scrollTopBtn.classList.add(...hiddenButtonClasses);
+        scrollTopBtn.setAttribute('aria-hidden', 'true');
+      }
+      ticking = false;
+    };
+
+    window.addEventListener('scroll', () => {
+      if (!ticking) {
+        window.requestAnimationFrame(updateVisibility);
+        ticking = true;
+      }
+    }, { passive: true });
+
+    scrollTopBtn.addEventListener('click', () => {
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    });
+
+    scrollTopBtn.addEventListener('keydown', (e) => {
+      if (e.key === 'Enter' || e.key === ' ') {
+        e.preventDefault();
+        scrollTopBtn.click();
+      }
+    });
+
+    updateVisibility();
+  }
+
+  function scrollToImage() {
+    const imageScrollId = sessionStorage.getItem("imageScrollId")
+    if (!imageScrollId) return;
+
+    sessionStorage.removeItem("imageScrollId")
+
+    document.getElementById(imageScrollId)?.scrollIntoView({
+      behavior: "instant",
+      block: "start",
+      inline: "nearest"
+    });
+  }
+
   function updateActiveButton(activePerson: string, activeAlbum: string ) {
     document.querySelectorAll('.filter-btn').forEach(button => {
       if (button instanceof HTMLElement) {
@@ -111,86 +204,6 @@ const allFaces = await getCollection("faces")
       }
     });
   }
-
-  document.addEventListener("astro:page-load", () => {
-    const currentParams = new URLSearchParams(window.location.search);
-    applyFilters();
-
-    // Get the button
-    const scrollTopBtn = document.getElementById("scrollTopBtn");
-    if (scrollTopBtn) {
-      const SHOW_OFFSET = 200;
-      let ticking = false;
-
-      const hiddenButtonClasses = ["opacity-0", "pointer-events-none", "translate-y-4"]
-      const visisbleButtonClasses = ["opacity-100", "pointer-events-auto", "translate-y-0"]
-
-      const updateVisibility = () => {
-        const scrolled = window.scrollY || window.pageYOffset;
-        if (scrolled > SHOW_OFFSET) {
-          scrollTopBtn.classList.remove(...hiddenButtonClasses);
-          scrollTopBtn.classList.add(...visisbleButtonClasses);
-          scrollTopBtn.setAttribute('aria-hidden', 'false');
-        } else {
-          scrollTopBtn.classList.remove(...visisbleButtonClasses);
-          scrollTopBtn.classList.add(...hiddenButtonClasses);
-          scrollTopBtn.setAttribute('aria-hidden', 'true');
-        }
-        ticking = false;
-      };
-
-      window.addEventListener('scroll', () => {
-        if (!ticking) {
-          window.requestAnimationFrame(updateVisibility);
-          ticking = true;
-        }
-      }, { passive: true });
-
-      scrollTopBtn.addEventListener('click', () => {
-        window.scrollTo({ top: 0, behavior: 'smooth' });
-      });
-
-      // keyboard accessibility
-      scrollTopBtn.addEventListener('keydown', (e) => {
-        if (e.key === 'Enter' || e.key === ' ') {
-          e.preventDefault();
-          scrollTopBtn.click();
-        }
-      });
-
-      // update initial state
-      updateVisibility();
-    }
-
-    document.querySelectorAll('.gallery-item').forEach((galleryItem) => {
-      galleryItem.addEventListener('click', () => {
-        sessionStorage.setItem('galleryFilters', window.location.search);
-      });
-    });
-
-    document.querySelectorAll('.filter-btn').forEach(button => {
-      if (button instanceof HTMLElement) {
-        const filter = button.dataset.filter;
-        const value = button.dataset.value;
-
-        if(!filter || !value ) throw "Filter or value not defined for the button " + button.innerText;
-
-        button.addEventListener('click', () => {
-          if (value === 'all') {
-            currentParams.delete(filter);
-          } else {
-            currentParams.set(filter, value);
-          }
-
-          const newQuery = currentParams.toString();
-          const newUrl = window.location.pathname + (newQuery ? `?${newQuery}` : '');
-          history.pushState({}, '', newUrl);
-
-          applyFilters();
-        });
-      }
-    });
-  });
 </script>
 
 <style>
